@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LinkedIn Profile Audit — John Paul Narvasa (Narvs)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #E8E8E8;
+      --paper: #FAF7F0;
+      --ink: #0A0A0A;
+      --muted: #5A5A5A;
+      --line: #000000;
+      --chip: #FFFFFF;
+      --yellow: #FFE500;
+      --pink: #FF4FA3;
+      --blue: #22C9F3;
+      --lime: #B7F34D;
+      --snap: cubic-bezier(0.2, 0.9, 0.3, 1.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.55;
+      padding-bottom: 80px;
+    }
+
+    /* ===== Ticker ===== */
+    .ticker {
+      background: #000;
+      color: var(--yellow);
+      border-bottom: 3px solid var(--line);
+      overflow: hidden;
+      user-select: none;
+    }
+    .ticker-track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: tickerScroll 24s linear infinite;
+      will-change: transform;
+    }
+    .ticker-content {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 9px 0;
+    }
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
+    /* ===== Layout ===== */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px; display: flex; flex-direction: column; gap: 26px; }
+
+    header.masthead h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(28px, 5vw, 44px);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+    header.masthead .sub {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--blue);
+      border: 3px solid var(--line);
+      box-shadow: 5px 5px 0 var(--line);
+      padding: 7px 16px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    header.masthead .meta {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 3px solid var(--line);
+      box-shadow: 8px 8px 0 var(--line);
+      padding: 24px 24px 28px;
+    }
+    .card h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card h2 .num {
+      background: var(--yellow);
+      border: 2px solid var(--line);
+      padding: 1px 9px;
+      font-size: 15px;
+      box-shadow: 3px 3px 0 var(--line);
+    }
+    .card .lede { color: var(--muted); font-size: 14.5px; font-weight: 500; margin-bottom: 16px; }
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 20px 0 8px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 4px;
+    }
+
+    /* ===== Severity chips ===== */
+    .sev {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 2px solid var(--line);
+      padding: 2px 8px;
+      box-shadow: 2px 2px 0 var(--line);
+      white-space: nowrap;
+    }
+    .sev-crit { background: var(--pink); }
+    .sev-high { background: var(--yellow); }
+    .sev-med  { background: var(--blue); }
+    .sev-ok   { background: var(--lime); }
+
+    /* ===== Findings ===== */
+    .finding {
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .finding .f-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+    .finding .f-title { font-weight: 700; font-size: 15.5px; }
+    .finding p { font-size: 14px; color: #333; }
+    .finding p + p { margin-top: 6px; }
+    .finding .fix { color: var(--ink); font-weight: 600; }
+
+    /* ===== Copy blocks ===== */
+    .copy-row { position: relative; margin-top: 10px; }
+    .copy-block {
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 16px 16px 46px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .copy-block .lbl {
+      display: block;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .btn {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--yellow);
+      color: var(--ink);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: transform 0.15s var(--snap), box-shadow 0.15s ease;
+    }
+    .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--line); }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
+    .copy-btn { position: absolute; right: 8px; bottom: 8px; }
+    .charcount {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    /* ===== Variant cards ===== */
+    .variant {
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .variant.rec { background: #FFFCEB; border-color: var(--line); outline: 3px solid var(--yellow); outline-offset: -7px; }
+    .variant .v-tag {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--blue);
+      border: 2px solid var(--line);
+      padding: 2px 8px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .variant.rec .v-tag { background: var(--lime); }
+    .variant .v-copy {
+      font-weight: 700;
+      font-size: 15.5px;
+      margin-bottom: 6px;
+    }
+    .variant .v-why { font-size: 13.5px; color: var(--muted); font-weight: 500; }
+
+    /* ===== Table ===== */
+    .tbl-wrap { overflow-x: auto; margin-top: 10px; border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--line); background: var(--chip); }
+    table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+    th, td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: var(--yellow); font-family: 'Archivo Black', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td.yes { background: #EAFFC8; font-weight: 700; }
+    td.no  { background: #FFE0EE; font-weight: 700; }
+
+    /* ===== Checklists ===== */
+    ul.checks { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-top: 8px; }
+    ul.checks li {
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      padding: 10px 14px 10px 40px;
+      position: relative;
+      font-size: 14px;
+    }
+    ul.checks li::before {
+      content: '';
+      position: absolute;
+      left: 12px; top: 50%;
+      width: 15px; height: 15px;
+      transform: translateY(-50%);
+      background: var(--yellow);
+      border: 2px solid var(--line);
+    }
+    ul.checks li b { font-weight: 700; }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .pill {
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      padding: 5px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .pill.pin { background: var(--lime); }
+    .pill.drop { background: var(--pink); text-decoration: line-through; }
+
+    .note {
+      background: var(--blue);
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 12px 16px;
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    /* ===== Score strip ===== */
+    .scores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+    .score {
+      flex: 1 1 150px;
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .score .n { font-family: 'Archivo Black', sans-serif; font-size: 30px; line-height: 1; }
+    .score .l { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-top: 5px; }
+    .score.bad .n { color: #D6006E; }
+    .score.ok .n { color: #0B8A00; }
+
+    /* ===== Toast ===== */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(80px);
+      background: #000;
+      color: var(--yellow);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 2px solid var(--yellow);
+      padding: 10px 20px;
+      opacity: 0;
+      transition: transform 0.3s var(--snap), opacity 0.3s ease;
+      z-index: 50;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ===== Back to top ===== */
+    #totop {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 46px; height: 46px;
+      background: var(--yellow);
+      border: 3px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 40;
+    }
+    #totop.show { opacity: 1; pointer-events: auto; }
+
+    footer.foot {
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 10px 18px 0;
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 18px 16px 22px; }
+      .card h2 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-content">LINKEDIN AUDIT ✦ LARAVEL ✦ FULLSTACK ✦ PHP ✦ VUE.JS ✦ TDD ✦ AGENTIC DEV ✦ SPEC FIRST, CODE SECOND ✦&nbsp;</span>
+      <span class="ticker-content">LINKEDIN AUDIT ✦ LARAVEL ✦ FULLSTACK ✦ PHP ✦ VUE.JS ✦ TDD ✦ AGENTIC DEV ✦ SPEC FIRST, CODE SECOND ✦&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <h1>LinkedIn Profile Audit</h1>
+      <div class="sub">John Paul "Narvs" Narvasa — Fullstack Laravel Developer</div>
+      <div class="meta">Sources: public profile data (crawl of old slug john-paul-narvasa-945034211, Sep 2026 — now redirected to linkedin.com/in/johnpaulnarvasa) + resume CV-102026 (authority for all dates &amp; metrics) + linkedin-cover.html · Prepared Oct 2026</div>
+    </header>
+
+    <!-- ============ 1. SCORECARD + FINDINGS ============ -->
+    <section class="card" id="findings">
+      <h2><span class="num">01</span> Scorecard &amp; Findings</h2>
+      <p class="lede">Diagnosis first, copy second. Severity = impact on recruiter search &amp; credibility.</p>
+
+      <div class="scores">
+        <div class="score bad"><div class="n">4/10</div><div class="l">Headline SEO</div></div>
+        <div class="score bad"><div class="n">2/10</div><div class="l">About Section</div></div>
+        <div class="score bad"><div class="n">3/10</div><div class="l">Experience Freshness</div></div>
+        <div class="score bad"><div class="n">4/10</div><div class="l">Skills Signal</div></div>
+        <div class="score ok"><div class="n">8/10</div><div class="l">Banner (local)</div></div>
+      </div>
+
+      <div class="finding" style="margin-top:18px;">
+        <div class="f-head"><span class="sev sev-crit">Critical</span><span class="f-title">Experience is stale — your current job isn't on the profile</span></div>
+        <p>Public data shows <b>Web Developer at New San Jose Builders marked "Current"</b>. Resume authority: New San Jose ended <b>Aug 2025</b>; you have been <b>Fullstack Developer at Elgada BPO Solutions Inc since Aug 2025</b> — running agentic TDD workflows on ModWatch (Laravel 6 / ExtJS). Elgada is missing entirely.</p>
+        <p class="fix">Fix: add Elgada as Current (Aug 2025 – Present), set New San Jose to Mar 2025 – Aug 2025, and apply the metric bullets from §05.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-crit">Critical</span><span class="f-title">Headline targets the wrong searches</span></div>
+        <p>Live: <i>"Web Developer | Laravel Developer | Nuxt Developer | JavaScript Developer | PHP Developer | Quality Assurance Engineer"</i> (118 chars). Missing the three terms you want to be found for: <b>Fullstack, Agentic Development, TDD</b>. "Web Developer" and "Quality Assurance Engineer" are generic/old-title anchors that dilute the mid-level Laravel signal.</p>
+        <p class="fix">Fix: use variant (a) or (b) in §02.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-crit">Critical</span><span class="f-title">About is one generic sentence — with a typo</span></div>
+        <p>Live opener: <i>"Greetings, I am John Paul, a proficient website developement…"</i> — contains the misspelling <b>"developement"</b>, zero metrics, zero keywords, no CTA. It fails before the “…see more” fold and wastes your highest-intention real estate.</p>
+        <p class="fix">Fix: replace with the full draft in §03 (1693 / 2600 chars, hook lands in the first 232 chars).</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-high">High</span><span class="f-title">Skills list dilutes your ranking signal</span></div>
+        <p>The public skills dump mixes your core with <b>react.js, angular, C#, asp.net, .net core, jquery, sass</b> — technologies your resume doesn't claim. LinkedIn search weights skills; unrelated bulk entries bury Laravel/PHP/Vue and hurt credibility if probed in interviews.</p>
+        <p class="fix">Fix: curate to ~15 real skills, pin Laravel / PHP / Vue.js (§06). Remove or de-rank what you can't defend.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-high">High</span><span class="f-title">No agentic / TDD narrative anywhere</span></div>
+        <p>Your differentiator — Jira ticket → AI proposes plan → you accept/edit → test-first PHPUnit implementation → separate-session PR validation — appears nowhere on the profile. It's the reason a hiring manager remembers you over other Laravel candidates, and it backs your motto.</p>
+        <p class="fix">Fix: §03 About paragraph + §05 Elgada bullets + §08 posting topics.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-ok">Done</span><span class="f-title">Custom URL claimed — linkedin.com/in/johnpaulnarvasa</span></div>
+        <p>The auto-generated <b>-945034211</b> suffix has been replaced with the clean custom URL <b>linkedin.com/in/johnpaulnarvasa</b> (Oct 2026).</p>
+        <p class="fix">Portfolio links updated in <code>index.html</code>, <code>index-v1.html</code>, <code>neo-brutalism.html</code>, <code>neo-brutalism-v2.html</code>. Remaining: update the URL on your resume PDF.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-med">Medium</span><span class="f-title">Non-dev role &amp; legacy keyword residue</span></div>
+        <p>Public data shows an <b>Etiqa Life (MIC Staff, non-voice)</b> entry — your resume omits it. Also the profile still reflects your 2022–2023 QA-era positioning.</p>
+        <p class="fix">Fix: keep Etiqa only if it explains a career gap; otherwise collapse to one line below dev roles. QA stays as a strength (30+ bugs pre-deployment), not the headline identity.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-med">Medium</span><span class="f-title">Activity went quiet after mid-2025</span></div>
+        <p>Latest visible posts: Vuetify app showcases (Jul 2025); since then mostly reactions. The algorithm and recruiters both read recency.</p>
+        <p class="fix">Fix: cadence plan in §08.</p>
+      </div>
+
+      <div class="finding">
+        <div class="f-head"><span class="sev sev-ok">Pass</span><span class="f-title">Banner (linkedin-cover.html) — evergreen &amp; safe-zone clean</span></div>
+        <p>Exact 1584×396, bottom-left avatar zone empty, no time-sensitive wording, contrast passes (black on yellow/blue/lime/pink). Full review in §09.</p>
+      </div>
+    </section>
+
+    <!-- ============ 2. HEADLINE ============ -->
+    <section class="card" id="headline">
+      <h2><span class="num">02</span> Headline Variants <span class="charcount">limit 220</span></h2>
+      <p class="lede">Front-loaded for recruiter searches: Laravel → Fullstack → PHP → Vue.js → TDD. Recommendation: variant (a) — it owns every target keyword while still naming the differentiator.</p>
+
+      <div class="variant rec">
+        <span class="v-tag">(a) Recruiter-search · 117 chars · Recommended</span>
+        <div class="v-copy">Fullstack Laravel Developer | PHP &amp; Vue.js | TDD, PHPUnit | Agentic AI-Assisted Development | Laravel 11, Nuxt, MySQL</div>
+        <div class="v-why">Every high-volume search term appears in the first 60 chars, so nothing truncates in search results. "Agentic AI-Assisted Development" rides the AI-hiring wave without date or level claims — evergreen.</div>
+        <div class="copy-row">
+          <div class="copy-block" id="hl-a">Fullstack Laravel Developer | PHP &amp; Vue.js | TDD, PHPUnit | Agentic AI-Assisted Development | Laravel 11, Nuxt, MySQL</div>
+          <button class="btn copy-btn" data-copy="hl-a">Copy</button>
+        </div>
+      </div>
+
+      <div class="variant">
+        <span class="v-tag">(b) Differentiator-led · 116 chars</span>
+        <div class="v-copy">Agentic Development &amp; TDD | Fullstack Laravel developer who ships AI-planned, test-first code | PHP, Vue.js, PHPUnit</div>
+        <div class="v-why">Leads with what makes you not-generic — the AI-planned, test-first workflow. Stronger for outbound/inbound profile views and referrals; slightly weaker pure-search weighting than (a) since "Agentic Development" is searched less than "Laravel".</div>
+        <div class="copy-row">
+          <div class="copy-block" id="hl-b">Agentic Development &amp; TDD | Fullstack Laravel developer who ships AI-planned, test-first code | PHP, Vue.js, PHPUnit</div>
+          <button class="btn copy-btn" data-copy="hl-b">Copy</button>
+        </div>
+      </div>
+
+      <div class="variant">
+        <span class="v-tag">(c) Short · 60 chars</span>
+        <div class="v-copy">Fullstack Laravel Developer | PHP, Vue.js, TDD &amp; Agentic Dev</div>
+        <div class="v-why">Never truncates, anywhere — mobile search rows, connection requests, comments bylines. Use if you prefer minimalism; you trade search-term breadth for punch.</div>
+        <div class="copy-row">
+          <div class="copy-block" id="hl-c">Fullstack Laravel Developer | PHP, Vue.js, TDD &amp; Agentic Dev</div>
+          <button class="btn copy-btn" data-copy="hl-c">Copy</button>
+        </div>
+      </div>
+
+      <div class="note">Dropped deliberately: "Mid-Level" (levels go stale and recruiters already filter by years in Experience), "Nuxt/JavaScript" as standalone anchors (folded into the stack), "Quality Assurance Engineer" (old identity — QA lives in your story, not your title).</div>
+    </section>
+
+    <!-- ============ 3. ABOUT ============ -->
+    <section class="card" id="about">
+      <h2><span class="num">03</span> About Section <span class="charcount">1693 / 2600 chars · hook = first 232</span></h2>
+      <p class="lede">Hook lands before the ~300-char fold. Structure: identity + specialty → metrics → agentic/TDD differentiator → stack keywords → CTA. First-person, Narvs voice.</p>
+
+      <div class="copy-row">
+        <div class="copy-block" id="about-full">I'm John Paul (Narvs) — a fullstack Laravel developer who ships test-first. 4 years from QA engineer to tech co-founder, now running agentic, TDD-driven delivery on production systems. Spec first, code second — build with intention.
+
+WHAT I DO
+Turn messy requirements into tested, maintainable code across legacy and modern stacks — Laravel 6 + ExtJS v5 through Laravel 11, Vue.js and Nuxt.
+
+SELECTED RESULTS
+• Cut bug-resolution time 40% through a structured Jira workflow: planning → unit-tested implementation → manual verification → PR review → merge.
+• Reduced task-completion time 50% and bug-fix time 70% while enhancing a legacy accident-tracking system serving thousands of employees.
+• Built 15+ responsive, modular components that cut development time 30%, and optimized database queries for 25% faster page loads.
+• Shipped 15+ landing pages that lifted client engagement 35%; as QA, caught 30+ bugs pre-deployment on a microservices system.
+
+HOW I WORK — THE DIFFERENTIATOR
+My daily loop is agentic and test-first. Jira tickets surface requirement gaps, an AI proposes the implementation plan, I accept, edit, or extend it, then I implement with PHPUnit unit + integration tests — plus a separate-session PR validation step before merge. Spec-driven workflows and AI-assisted development are how I move faster without trading away quality.
+
+STACK
+Laravel, Eloquent, PHP, MySQL/MSSQL, REST APIs, Vue.js, Nuxt, Vuetify, TypeScript, Tailwind CSS, PHPUnit, Vitest, Git, Azure DevOps, AWS, Jira Agile.
+
+OPEN TO
+Mid-level fullstack / Laravel roles — Quezon City, remote-friendly. If you need someone who writes the spec first and the tests second, let's talk: johnpaulnarvasa6@gmail.com</div>
+        <button class="btn copy-btn" data-copy="about-full">Copy About</button>
+      </div>
+
+      <h3>Why this works</h3>
+      <ul class="checks">
+        <li><b>Line 1:</b> identity + specialty + years — the exact terms a recruiter scans for ("fullstack Laravel developer", "test-first").</li>
+        <li><b>Line 2:</b> the motto as a memorable sign-off to the hook — brand, not filler.</li>
+        <li><b>Fold test:</b> 232 chars visible before “…see more” — the entire hook + motto fit.</li>
+        <li><b>Metrics first:</b> four bullet clusters carry all seven resume metrics (40 / 50 / 70 / 15+ / 30 / 25 / 35 / 30+).</li>
+        <li><b>Keywords woven, not stuffed:</b> Laravel developer, fullstack, PHP, Vue, TDD, QA, PHPUnit, REST API all appear in sentences.</li>
+        <li><b>CTA closes:</b> availability + email — one clear next step.</li>
+      </ul>
+    </section>
+
+    <!-- ============ 4. KEYWORD MAP ============ -->
+    <section class="card" id="seo">
+      <h2><span class="num">04</span> SEO Keyword Map</h2>
+      <p class="lede">Every target term must appear in all four layers: headline → About → top skills → experience bullets. This is the "after" state once §02–§06 are applied.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Target term</th><th>Headline</th><th>About</th><th>Top skill</th><th>Experience</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Laravel</b></td><td class="yes">✓</td><td class="yes">✓ ×5</td><td class="yes">✓ pin 1</td><td class="yes">✓ all roles</td></tr>
+            <tr><td><b>Fullstack</b></td><td class="yes">✓</td><td class="yes">✓ ×3</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td><b>PHP</b></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓ pin 2</td><td class="yes">✓ (Laravel implies, named in skills)</td></tr>
+            <tr><td><b>Vue.js</b></td><td class="yes">✓</td><td class="yes">✓ ×3</td><td class="yes">✓ pin 3</td><td class="yes">✓ Technomancer / New San Jose</td></tr>
+            <tr><td><b>TDD</b></td><td class="yes">✓</td><td class="yes">✓ ×3</td><td class="yes">✓</td><td class="yes">✓ Elgada</td></tr>
+            <tr><td>Agentic / AI-assisted dev</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓ Elgada</td></tr>
+            <tr><td>PHPUnit / testing</td><td class="yes">✓</td><td class="yes">✓ ×2</td><td class="yes">✓</td><td class="yes">✓ Elgada</td></tr>
+            <tr><td>QA</td><td class="no">— (removed)</td><td class="yes">✓ story bullet</td><td class="yes">✓</td><td class="yes">✓ Technomancer</td></tr>
+            <tr><td>Nuxt</td><td class="yes">✓</td><td class="yes">✓ ×2</td><td class="yes">✓</td><td class="yes">✓ New San Jose</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 5. EXPERIENCE ============ -->
+    <section class="card" id="experience">
+      <h2><span class="num">05</span> Experience Rewrite</h2>
+      <p class="lede">Apply these metric bullets to each role (dates below are resume-exact). Add Elgada first — it's missing entirely.</p>
+
+      <h3>Elgada BPO Solutions Inc — Fullstack Developer · Aug 2025 – Present <span class="sev sev-crit" style="margin-left:6px;">Add this</span></h3>
+      <div class="copy-row">
+        <div class="copy-block" id="xp-elgada">• Maintain and enhance ModWatch, an accident/employee-tracking system serving thousands of employees, on a legacy Laravel 6 backend and ExtJS v5 frontend, connected through REST APIs.
+• Cut bug-resolution time by 40% through a structured Jira workflow: planning, unit-tested implementation, manual verification, PR review, and merge.
+• Contributed to an agentic, TDD-driven delivery workflow: Jira tickets surface requirement gaps and decisions, the AI proposes an implementation plan that I accept, edit, or extend, then I implement it test-first with PHPUnit unit and integration tests.
+• Added a separate-session PR validation step that reviews the implementation against the codebase before merge.
+• Reduced task completion time by 50% and bug-fix time by 70%.</div>
+        <button class="btn copy-btn" data-copy="xp-elgada">Copy</button>
+      </div>
+
+      <h3>New San Jose Builders Inc — Fullstack Developer · Mar 2025 – Aug 2025</h3>
+      <div class="copy-row">
+        <div class="copy-block" id="xp-nsj">• Co-developed CasaFlow (project management, 3 departments) and ShareBNB (booking platform, 50+ listings) using Laravel 11, Nuxt, Vuetify, and MySQL.
+• Built 15+ responsive, modular components, cutting development time by 30%.
+• Optimized database queries, improving page-load speed by 25%.</div>
+        <button class="btn copy-btn" data-copy="xp-nsj">Copy</button>
+      </div>
+
+      <h3>ADSvanced Media — Tech Co-Founder / Lead Web Developer · Oct 2023 – Mar 2025</h3>
+      <div class="copy-row">
+        <div class="copy-block" id="xp-ads">• Led the scaffolding of every client application, setting up the base project structure and architecture.
+• Designed the MySQL database schema and built the backend for a custom CMS and booking system used by multiple clients.
+• Delivered 15+ high-converting, high-performance landing pages with integrated animations, chat, and social features, lifting client engagement by 35%.
+• Managed the internship program and mentored 2 junior developers.</div>
+        <button class="btn copy-btn" data-copy="xp-ads">Copy</button>
+      </div>
+
+      <h3>Technomancer Inc — Junior System Analyst / QA Engineer · Dec 2022 – Sep 2023</h3>
+      <div class="copy-row">
+        <div class="copy-block" id="xp-tech">• Built dynamic client websites with Laravel and Vue.js, consistently delivering on schedule.
+• Improved ecommerce site performance, increasing page-load speed by 20%.
+• QA-tested a microservices system for Unemployment Insurance Services, catching 30+ bugs pre-deployment.</div>
+        <button class="btn copy-btn" data-copy="xp-tech">Copy</button>
+      </div>
+
+      <h3>Sprintship Philippines — Junior Web Developer · Jun 2022 – Nov 2022</h3>
+      <div class="copy-row">
+        <div class="copy-block" id="xp-sprint">• Managed a Helpdesk ticketing system (100+ daily tickets) and resolved 30+ layout issues across tenant pages.</div>
+        <button class="btn copy-btn" data-copy="xp-sprint">Copy</button>
+      </div>
+    </section>
+
+    <!-- ============ 6. SKILLS ============ -->
+    <section class="card" id="skills">
+      <h2><span class="num">06</span> Skills &amp; Endorsements</h2>
+      <p class="lede">Pin the top 3 (drag order in Edit skills). Every additional skill should reinforce — never dilute — the Laravel/PHP/Vue signal.</p>
+
+      <h3>Pinned top 3</h3>
+      <div class="pill-row">
+        <span class="pill pin">1 · Laravel</span>
+        <span class="pill pin">2 · PHP</span>
+        <span class="pill pin">3 · Vue.js</span>
+      </div>
+
+      <h3>Keep (~12 more)</h3>
+      <div class="pill-row">
+        <span class="pill">Nuxt.js</span><span class="pill">JavaScript</span><span class="pill">TypeScript</span>
+        <span class="pill">MySQL</span><span class="pill">REST APIs</span><span class="pill">Eloquent ORM</span>
+        <span class="pill">TDD</span><span class="pill">PHPUnit</span><span class="pill">Tailwind CSS</span>
+        <span class="pill">Vuetify</span><span class="pill">Jira</span><span class="pill">Agile</span>
+        <span class="pill">Quality Assurance</span><span class="pill">Git</span>
+      </div>
+
+      <h3>Remove or de-rank</h3>
+      <div class="pill-row">
+        <span class="pill drop">react.js</span><span class="pill drop">angular</span><span class="pill drop">C#</span>
+        <span class="pill drop">asp.net</span><span class="pill drop">.net core</span><span class="pill drop">jquery</span>
+        <span class="pill drop">sass</span><span class="pill drop">figma</span><span class="pill drop">gnu make</span>
+      </div>
+
+      <h3>Endorsement asks (send 3 each)</h3>
+      <ul class="checks">
+        <li><b>Laravel + PHP + TDD</b> → developers you code-reviewed with at <b>Elgada</b> (they watched the Jira → test-first loop land).</li>
+        <li><b>Vue.js + Nuxt</b> → the <b>New San Jose</b> co-developer on CasaFlow / ShareBNB.</li>
+        <li><b>Teamwork / mentoring</b> → one of the <b>2 juniors you mentored at ADSvanced</b> or an intern — reciprocity makes these land.</li>
+        <li>Give first: endorse 5 people before asking. Endorsement requests returned are roughly proportional to what you send.</li>
+      </ul>
+    </section>
+
+    <!-- ============ 7. SETTINGS ============ -->
+    <section class="card" id="settings">
+      <h2><span class="num">07</span> Profile Settings Checklist</h2>
+      <p class="lede">Ten minutes of configuration, disproportionate return.</p>
+      <ul class="checks">
+        <li><b>Custom URL:</b> <s>claim linkedin.com/in/johnpaulnarvasa</s> — <b>claimed ✓</b>; portfolio links updated in all 4 variants. Resume PDF link still to update.</li>
+        <li><b>Featured:</b> pin 1) portfolio site (index.html deployed URL), 2) banner PNG from linkedin-cover.html, 3) your best project post (CasaFlow/ShareBNB or the expense-tracker showcase).</li>
+        <li><b>Open to work:</b> enable <b>recruiters only</b> (not the green frame) — Fullstack Developer / Laravel Developer roles, Philippines · Remote.</li>
+        <li><b>Contact info:</b> email + GitHub + portfolio URL visible.</li>
+        <li><b>Experience:</b> add Elgada (Current), fix New San Jose dates, paste §05 bullets.</li>
+        <li><b>Headline:</b> swap in §02 variant (a).</li>
+        <li><b>About:</b> replace with §03 draft.</li>
+        <li><b>Skills:</b> apply §06 pins + removals.</li>
+        <li><b>Profile photo:</b> keep the face inside LinkedIn's circular crop — verify nothing critical sits bottom-left of the banner (avatar overlaps ~200×140px).</li>
+        <li><b>Creator mode / "Featured in":</b> if shown, add "Open to work" + portfolio as featured links.</li>
+      </ul>
+    </section>
+
+    <!-- ============ 8. ACTIVITY ============ -->
+    <section class="card" id="activity">
+      <h2><span class="num">08</span> Activity Plan &amp; Recommendations</h2>
+      <p class="lede">Own the agentic + TDD niche — it's crowded with "Laravel developer" and empty of people who can show the loop working in production.</p>
+
+      <h3>Cadence</h3>
+      <ul class="checks">
+        <li><b>2 posts per week</b> (Tue/Thu morning PH time) — sustainable, enough for the algorithm to treat you as active.</li>
+        <li><b>Daily (2 min):</b> comment on 3 posts from Laravel / AI-workflow people — visibility without content cost.</li>
+      </ul>
+
+      <h3>Post topics (rotate)</h3>
+      <ul class="checks">
+        <li><b>Agentic dev walkthroughs:</b> "how a Jira ticket becomes a test-first PR — with the AI plan I accepted/edit/rejected" (screenshots of the loop, not the code).</li>
+        <li><b>TDD in legacy:</b> adding PHPUnit tests to a Laravel 6 / ExtJS app — the 40% bug-resolution story.</li>
+        <li><b>Before/after metrics:</b> 50% task time, 70% bug-fix time — one metric per post, with the workflow change that caused it.</li>
+        <li><b>Spec-driven process:</b> your motto as a recurring series — "Spec first, code second" installments.</li>
+        <li><b>Project showcases:</b> keep the Vuetify/landing-page format that already performed, but frame each with a metric.</li>
+      </ul>
+
+      <h3>Recommendation requests — send 2</h3>
+      <ul class="checks">
+        <li><b>Your lead/peer at Elgada</b> (e.g. the colleague who ran the Claude Code training session — verify he's your direct lead): ask for a recommendation about the agentic TDD workflow and the 40/50/70% gains. Give them the metrics in your request so writing is easy.</li>
+        <li><b>The ADSvanced founding context</b> — a client or collaborator who saw you lead scaffolding + mentor 2 juniors: ask for a recommendation about ownership and architecture, not "great developer."</li>
+        <li>Always send a draft bullet list with the request; acceptance rates roughly double when the writer only has to edit, not compose.</li>
+      </ul>
+    </section>
+
+    <!-- ============ 9. BANNER ============ -->
+    <section class="card" id="banner">
+      <h2><span class="num">09</span> Banner Review — linkedin-cover.html</h2>
+      <p class="lede">Review of the local banner source. Verify the PNG actually uploaded to LinkedIn matches it (screenshot welcome — nothing is edited without approval).</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Check</th><th>Verdict</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Dimensions</td><td class="yes">PASS</td><td>Exactly 1584×396 (4:1) — stage set in px</td></tr>
+            <tr><td>Avatar safe zone</td><td class="yes">PASS</td><td>Bottom-left ~200×140px empty; stickers are top-anchored, stage content centered</td></tr>
+            <tr><td>Evergreen audit</td><td class="yes">PASS</td><td>No years, dates, "4+", or employer names. Ticker/chips/quote are all durable terms</td></tr>
+            <tr><td>Contrast</td><td class="yes">PASS</td><td>Black on yellow #FFE500, blue #22C9F3, lime #B7F34D, pink #FF4FA3 — all exceed WCAG AA for large text; white chips black text</td></tr>
+            <tr><td>Mobile legibility</td><td class="warn">⚠ BORDERLINE</td><td>At ~4.4× shrink: quote bar 38px→~8.6px (readable), title bar 22px→~5px (below comfortable). Ticker/chips/stickers degrade to decorative — expected</td></tr>
+            <tr><td>Composition</td><td class="warn">⚠ NOTE</td><td>Sticker-1 (top:20px left:60px) overlaps the ticker band by design — confirm it doesn't land on a ticker word at screenshot time. Otherwise hard-shadow style is consistent</td></tr>
+            <tr><td>Quote vs title collision</td><td class="yes">PASS</td><td>18px gap, separate shadowed bars — no overlap at fixed stage size</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">Optional tweaks (only on your approval — I will not edit linkedin-cover.html otherwise): (1) bump title-bar font 22px → 26px so it survives mobile shrink; (2) nudge sticker-1 down to top:56px so it sits below the ticker instead of on it.</div>
+    </section>
+
+    <!-- ============ 10. ACTION ORDER ============ -->
+    <section class="card" id="actions">
+      <h2><span class="num">10</span> Do This, In This Order</h2>
+      <p class="lede">Highest-leverage first. ~90 minutes total for steps 1–6.</p>
+      <ul class="checks">
+        <li><b>1 · Experience</b> — add Elgada (Current), fix New San Jose dates, paste §05 bullets. <i>Stale job info is the single worst credibility leak.</i></li>
+        <li><b>2 · Headline</b> — paste §02 variant (a).</li>
+        <li><b>3 · About</b> — paste §03 draft.</li>
+        <li><b>4 · Skills</b> — pin Laravel/PHP/Vue.js, remove §06 drop list.</li>
+        <li><b>5 · Custom URL</b> — <s>claim johnpaulnarvasa</s> <b>✓ done</b> — portfolio links updated; resume PDF pending.</li>
+        <li><b>6 · Featured + Open-to-work</b> — §07 checklist.</li>
+        <li><b>7 · Recommendations</b> — send the 2 requests (§08).</li>
+        <li><b>8 · Activity</b> — start the 2×/week cadence with one agentic-dev post this week.</li>
+        <li><b>9 · Banner</b> — export 1584×396 PNG (DevTools → Capture node screenshot), upload; request §09 tweaks if you want them.</li>
+        <li><b>10 · Re-audit in 30 days</b> — search "Laravel Developer" in LinkedIn search with filters (your region, 3–7 yrs) and check whether your profile appears.</li>
+      </ul>
+    </section>
+
+    <footer class="foot">
+      Spec first, code second — build with intention. — Narvs · Audit generated Oct 2026 · Facts sourced from resume CV-102026 (authoritative) &amp; public profile crawl
+    </footer>
+  </div>
+
+  <div id="toast">Copied to clipboard</div>
+  <button id="totop" aria-label="Back to top">↑</button>
+
+  <script>
+  (function () {
+    var toast = document.getElementById('toast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise(function (resolve, reject) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); resolve(); }
+        catch (e) { reject(e); }
+        finally { document.body.removeChild(ta); }
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      var src = document.getElementById(btn.getAttribute('data-copy'));
+      if (!src) return;
+      copyText(src.innerText).then(function () {
+        showToast('Copied to clipboard');
+        var old = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = old; }, 1400);
+      }).catch(function () {
+        showToast('Copy failed — select manually');
+      });
+    });
+
+    var totop = document.getElementById('totop');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 500) totop.classList.add('show');
+      else totop.classList.remove('show');
+    }, { passive: true });
+    totop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+
+</body>
+</html>
