@@ -3,31 +3,57 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#FF6A1C"/>
-  <title>John Paul Narvasa — Fullstack Developer</title>
+  <meta name="theme-color" content="#FFE500"/>
+  <title>John Paul Narvasa — Mid-Level Fullstack Laravel Developer (Neo-Brutalism V3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=Yusei+Magic&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <style>
+    :root {
+      --bg: #FFE500;
+      --card: #FAF7F0;
+      --ink: #0A0A0A;
+      --muted: #5A5A5A;
+      --line: #000000;
+      --chip: #FFFFFF;
+      --pink: #FF4FA3;
+      --blue: #22C9F3;
+      --lime: #B7F34D;
+      --snap: cubic-bezier(0.2, 0.9, 0.3, 1.4);
+    }
+
+    body.dark {
+      --bg: #121212;
+      --card: #1E1E1E;
+      --ink: #F5F5F5;
+      --muted: #AFAFAF;
+      --line: #FFE500;
+      --chip: #2A2A2A;
+      --pink: #FF6FBB;
+      --blue: #4DDCFF;
+      --lime: #C9FF6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    ::selection { background: var(--pink); color: #000; }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     ::-webkit-scrollbar { display: none; }
     body { scrollbar-width: none; -ms-overflow-style: none; }
 
     body {
-      background: linear-gradient(180deg, #87CEEB 0%, #A8E6CF 70%, #6BBF59 72%, #3D8B37 100%);
+      background: var(--bg);
       background-attachment: fixed;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--ink);
       display: flex;
       justify-content: center;
       padding: 2rem 1rem;
       min-height: 100vh;
-    }
-
-    body.dark {
-      background: linear-gradient(180deg, #0B0D2E 0%, #131744 50%, #080A1F 100%);
-      background-attachment: fixed;
+      transition: background-color 0.3s ease;
     }
 
     @keyframes topToBottom {
@@ -66,9 +92,10 @@
     .scroll-progress {
       position: fixed;
       top: 0; left: 0;
-      height: 3px;
+      height: 6px;
       width: 0%;
-      background: linear-gradient(90deg, #FFAE56, #FF6A1C, #F5788B);
+      background: var(--pink);
+      border-bottom: 2px solid #000;
       z-index: 1000;
       transition: width 0.1s linear;
     }
@@ -83,15 +110,17 @@
     }
     .particle {
       position: absolute;
-      border-radius: 50%;
+      border-radius: 0;
       animation: particleDrift linear infinite;
       opacity: 0;
+      border: 1px solid rgba(0,0,0,0.25);
     }
+    body.dark .particle { border-color: rgba(255,229,0,0.3); }
     @keyframes particleDrift {
       0% { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.4; }
-      100% { transform: translateX(110vw) translateY(-60px) scale(1.8); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.5; }
+      100% { transform: translateX(110vw) translateY(-60px) scale(1.5); opacity: 0; }
     }
 
     /* Toast */
@@ -100,17 +129,23 @@
       bottom: 2rem;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: #FF6A1C;
-      color: #fff;
+      background: var(--pink);
+      color: #000;
       padding: 0.8rem 1.8rem;
-      border-radius: 8px;
+      border: 3px solid #000;
+      border-radius: 0;
       font-size: 0.85rem;
-      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
       opacity: 0;
       transition: transform 0.4s ease, opacity 0.4s ease;
       z-index: 500;
       pointer-events: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 6px 6px 0 #000;
+    }
+    body.dark .toast-box {
+      border-color: var(--line);
+      box-shadow: 6px 6px 0 var(--line);
     }
     .toast-box.show {
       transform: translateX(-50%) translateY(0);
@@ -121,18 +156,14 @@
     .newspaper {
       max-width: 960px;
       width: 100%;
-      background: #fdf6ee;
+      background: var(--card);
       padding: 2rem 2rem 1.5rem;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.35), 0 0 0 1px #d4a57a inset;
+      border: 4px solid var(--line);
+      box-shadow: 12px 12px 0 var(--line);
       position: relative;
       z-index: 1;
-      border-radius: 12px;
+      border-radius: 0;
       animation: paperFadeIn 0.8s ease-out;
-    }
-
-    .newspaper.dark {
-      background: #1a1210;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.6), 0 0 0 1px #3d2a1a inset;
     }
 
     @keyframes paperFadeIn {
@@ -144,17 +175,11 @@
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(200,150,80,0.04) 2px, rgba(200,150,80,0.04) 4px),
-        repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(180,130,60,0.03) 3px, rgba(180,130,60,0.03) 6px);
+      background: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+      background-size: 22px 22px;
+      opacity: 0.05;
       pointer-events: none;
-      border-radius: 12px;
-    }
-
-    .newspaper.dark::before {
-      background:
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,150,80,0.03) 2px, rgba(255,150,80,0.03) 4px),
-        repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,130,60,0.02) 3px, rgba(255,130,60,0.02) 6px);
+      z-index: -1;
     }
 
     /* Scroll Reveal */
@@ -173,24 +198,27 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px double #FF6A1C;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-      font-family: 'Yusei Magic', cursive;
+      border-bottom: 4px solid var(--line);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
     }
     .extra-banner .extra-left {
-      font-size: 1.8rem;
-      color: #FF6A1C;
-      letter-spacing: 0.3em;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.7rem;
+      color: var(--ink);
+      letter-spacing: 0.2em;
       position: relative;
       overflow: hidden;
+      text-shadow: 3px 3px 0 var(--pink);
     }
     .extra-banner .extra-left::after {
       content: '';
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,106,28,0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,79,163,0.3), transparent);
       animation: shimmer 3s ease-in-out infinite;
     }
     @keyframes shimmer {
@@ -198,13 +226,59 @@
       50% { left: 100%; }
       100% { left: 100%; }
     }
-    .extra-banner .extra-right { font-size: 0.85rem; color: #FF6A1C; }
-    .extra-banner .extra-price { font-size: 0.75rem; color: #999; }
+    .extra-banner .extra-right {
+      font-size: 0.78rem;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .extra-banner .extra-price {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
 
-    .newspaper.dark .extra-banner .extra-price { color: #888; }
-    .newspaper.dark .extra-banner .extra-left { color: #FFAE56; }
-    .newspaper.dark .extra-banner .extra-right { color: #FFAE56; }
-    .newspaper.dark .extra-banner { border-bottom-color: #FFAE56; }
+    /* Brutalist dark toggle */
+    #toggleTrack {
+      border: 2px solid #000;
+      border-radius: 0;
+    }
+    body.dark #toggleTrack { border-color: var(--line); }
+    #toggleThumb { border-radius: 0; }
+
+    /* Marquee Ticker */
+    .ticker {
+      margin: 0 -2rem 1.3rem;
+      border-top: 3px solid var(--line);
+      border-bottom: 3px solid var(--line);
+      background: #000;
+      color: #FFE500;
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+    }
+    .ticker-track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: tickerScroll 18s linear infinite;
+      will-change: transform;
+    }
+    .ticker-content {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.55rem 0;
+    }
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
 
     /* Headline */
     .headline-wrap {
@@ -215,35 +289,31 @@
     .headline-wrap::after {
       content: '';
       display: block;
-      width: 80px; height: 3px;
-      background: #FF6A1C;
-      margin: 0.5rem auto;
+      width: 110px; height: 8px;
+      background: var(--line);
+      box-shadow: 4px 4px 0 var(--pink);
+      margin: 0.7rem auto 0;
       animation: lineGrow 2s ease-out forwards;
       transform-origin: left;
     }
-    .newspaper.dark .headline-wrap::after { background: #FFAE56; }
     @keyframes lineGrow {
       from { transform: scaleX(0); }
       to { transform: scaleX(1); }
     }
     .headline-main {
-      font-family: 'Yusei Magic', cursive;
-      font-size: 2.2rem;
-      color: #2d1a0a;
-      line-height: 1.3;
-      letter-spacing: 0.05em;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      color: var(--ink);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 var(--pink);
+      text-wrap: balance;
     }
-    .newspaper.dark .headline-main { color: #f0e0d0; }
     .headline-main .accent {
-      color: #FF6A1C;
-      font-size: 2.5rem;
+      color: var(--blue);
+      font-size: 1.15em;
       display: inline-block;
-      animation: accentPulse 3s ease-in-out infinite;
-    }
-    .newspaper.dark .headline-main .accent { color: #FFAE56; }
-    @keyframes accentPulse {
-      0%, 100% { text-shadow: 0 0 0 rgba(255,106,28,0); }
-      50% { text-shadow: 0 0 12px rgba(255,106,28,0.25); }
     }
     .headline-main .letter {
       display: inline-block;
@@ -275,18 +345,50 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .headline-sub {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
-      color: #888;
-      margin-top: 0.3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
       font-style: italic;
+      font-weight: 500;
     }
-    .newspaper.dark .headline-sub { color: #999; }
+
+    /* Stickers */
+    .sticker {
+      position: absolute;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #000;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      padding: 0.4rem 0.7rem;
+      z-index: 20;
+      pointer-events: none;
+      animation: stickerFloat 4s ease-in-out infinite;
+    }
+    .sticker-1 {
+      background: var(--lime);
+      top: -12px;
+      right: -18px;
+      transform: rotate(6deg);
+    }
+    .sticker-2 {
+      background: var(--pink);
+      top: -8px;
+      right: 0;
+      transform: rotate(-6deg);
+    }
+    @keyframes stickerFloat {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -6px; }
+    }
 
     /* Content Grid */
     .content-grid {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 200px 1fr;
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
@@ -303,312 +405,392 @@
       transform-style: preserve-3d;
     }
     .profile-img-wrap:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
     .profile-img {
       width: 150px;
       height: auto;
-      border-radius: 8px;
+      border: 3px solid var(--line);
+      box-shadow: 6px 6px 0 var(--line);
+      border-radius: 0;
       display: block;
-      transition: filter 0.3s ease;
+      transition: box-shadow 0.2s ease, filter 0.3s ease;
       cursor: pointer;
+      background: var(--chip);
     }
-    .profile-img:hover {
-      filter: brightness(1.08) drop-shadow(0 4px 12px rgba(255,106,28,0.35));
+    .profile-img-wrap:hover .profile-img {
+      box-shadow: 9px 9px 0 var(--pink);
     }
     .profile-tooltip {
       position: absolute;
-      bottom: -50px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      background: #FF6A1C;
-      color: #fff;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.7rem;
+      background: var(--lime);
+      color: #000;
+      border: 2px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 0.35rem 0.6rem;
+      border-radius: 0;
+      font-size: 0.65rem;
+      font-weight: 700;
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease, bottom 0.3s ease;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       z-index: 10;
-    }
-    .profile-tooltip::after {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-bottom: 6px solid #FF6A1C;
     }
     .profile-img-wrap:hover .profile-tooltip {
       opacity: 1;
-      bottom: -56px;
+      bottom: 8px;
     }
 
     .profile-name {
-      font-family: 'Yusei Magic', cursive;
-      font-size: 1.3rem;
-      color: #2d1a0a;
-      margin-top: 0.5rem;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      text-align: center;
     }
-    .newspaper.dark .profile-name { color: #f0e0d0; }
     .profile-name .emoji-icon {
       display: inline-block;
       animation: floatEmoji 2s ease-in-out infinite;
+      color: var(--pink);
     }
     @keyframes floatEmoji {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
     }
-    .profile-title { font-size: 0.75rem; color: #999; letter-spacing: 0.15em; }
+    .profile-title {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      line-height: 1.5;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 0.15rem;
+    }
 
     .contact-info {
-      margin-top: 0.8rem;
-      font-size: 0.75rem;
-      color: #666;
+      margin-top: 0.9rem;
+      font-size: 0.7rem;
+      color: var(--muted);
       text-align: center;
-      line-height: 1.8;
+      font-weight: 500;
+      width: 100%;
     }
-    .newspaper.dark .contact-info { color: #aaa; }
-    .contact-info i { color: #FF6A1C; margin-right: 0.3rem; }
-    .newspaper.dark .contact-info i { color: #FFAE56; }
+    .contact-info .c-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 0.4rem;
+      white-space: nowrap;
+    }
+    .contact-info i { color: var(--pink); flex-shrink: 0; }
+    .contact-info .c-sep { color: var(--muted); }
 
-    .article { columns: 2; column-gap: 1.2rem; column-rule: 1px solid #d4a57a; }
-    .newspaper.dark .article { column-rule-color: #3d2a1a; }
+    .article { columns: 1; }
     .article p {
-      font-size: 0.85rem;
-      line-height: 1.9;
-      margin-bottom: 0.8rem;
-      text-align: justify;
-      color: #444;
-      text-indent: 1em;
+      font-size: 0.88rem;
+      line-height: 1.8;
+      margin-bottom: 0.9rem;
+      text-align: left;
+      color: var(--ink);
+      text-indent: 0;
+      opacity: 0.92;
     }
-    .newspaper.dark .article p { color: #bbb; }
-    .article p:first-of-type { text-indent: 0; }
     .article .dropcap::first-letter {
-      font-size: 2.8rem; float: left; line-height: 0.8; margin-right: 0.3rem;
-      font-family: 'Yusei Magic', cursive; color: #FF6A1C;
-      animation: dropcapGlow 2s ease-in-out infinite;
-    }
-    .newspaper.dark .article .dropcap::first-letter { color: #FFAE56; }
-    @keyframes dropcapGlow {
-      0%, 100% { text-shadow: 0 0 0 rgba(255,106,28,0); }
-      50% { text-shadow: 0 0 8px rgba(255,106,28,0.2); }
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 2.5rem;
+      float: left;
+      line-height: 0.9;
+      margin: 0.15rem 0.35rem 0 0;
+      padding: 0.15rem 0.35rem;
+      color: #000;
+      background: var(--pink);
+      border: 3px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
     }
 
     /* Section */
     .section {
-      border-top: 2px solid #FF6A1C;
-      padding-top: 1rem;
-      margin-bottom: 1.5rem;
+      border-top: 4px solid var(--line);
+      padding-top: 1.2rem;
+      margin-bottom: 1.6rem;
     }
-    .newspaper.dark .section { border-top-color: #FFAE56; }
     .section h3 {
-      font-family: 'Yusei Magic', cursive;
-      font-size: 1.1rem;
-      color: #2d1a0a;
-      margin-bottom: 0.5rem;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+      color: #000;
+      background: var(--pink);
+      border: 3px solid var(--line);
+      box-shadow: 4px 4px 0 var(--line);
+      padding: 0.3rem 1rem;
+      display: table;
+      margin: 0 auto 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       text-align: center;
     }
-    .newspaper.dark .section h3 { color: #f0e0d0; }
+    /* Skill category groups + brutalist tags */
+    .skill-group { margin-bottom: 1.1rem; }
+    .skill-group .tech-grid { gap: 0.5rem 0.7rem; }
+    .brut-tag {
+      display: inline-block;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #000;
+      background: var(--pink);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      padding: 0.22rem 0.7rem;
+      margin-bottom: 0.55rem;
+      transform: rotate(-1.5deg);
+    }
+    .brut-tag.tag-blue { background: var(--blue); }
+    .brut-tag.tag-lime { background: var(--lime); }
+    .brut-tag.tag-yellow { background: #FFE500; }
+    .brut-tag.tag-white { background: #FFFFFF; }
+    .article .brut-tag { margin-bottom: 0.7rem; }
+
+    /* Job description bullet lists */
+    .work-item .job-desc ul {
+      list-style: none;
+      margin: 0.25rem 0 0;
+      padding: 0;
+    }
+    .work-item .job-desc li {
+      position: relative;
+      padding-left: 1.15rem;
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .work-item .job-desc li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      top: 0.05rem;
+      color: var(--pink);
+      font-size: 0.7rem;
+    }
+    .work-item.active-item .job-desc li::before { color: #000; }
 
     /* Curriculum Grid (for tech, work, education) */
     .curriculum-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.3rem 1rem;
+      gap: 0.5rem 1rem;
     }
     .curriculum-item {
       font-size: 0.8rem;
-      padding: 0.3rem 0.5rem;
-      border-bottom: 1px dotted #d4a57a;
+      font-weight: 600;
+      padding: 0.45rem 0.6rem;
+      background: var(--chip);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      border-radius: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease, padding 0.3s ease;
-      border-radius: 4px;
+      transition: transform 0.18s var(--snap), box-shadow 0.18s var(--snap), background 0.2s ease, color 0.2s ease;
       position: relative;
-      color: #444;
-    }
-    .newspaper.dark .curriculum-item {
-      border-bottom-color: #3d2a1a;
-      color: #bbb;
+      color: var(--ink);
     }
     .curriculum-item:hover {
-      background: rgba(255,106,28,0.08);
-      padding-left: 0.8rem;
-      transform: translateX(4px);
+      background: var(--lime);
+      color: #000;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--line);
     }
-    .curriculum-item .phase { color: #FF6A1C; font-weight: 700; white-space: nowrap; }
-    .newspaper.dark .curriculum-item .phase { color: #FFAE56; }
+    .curriculum-item:active {
+      transform: translate(0, 0) scale(0.96);
+      box-shadow: 2px 2px 0 var(--line);
+    }
+    .curriculum-item .phase { color: var(--blue); font-weight: 700; white-space: nowrap; }
     .curriculum-item .badge-count {
-      background: #FF6A1C;
-      color: #fff;
+      background: var(--line);
+      color: var(--bg);
       padding: 0.1rem 0.5rem;
-      border-radius: 10px;
+      border-radius: 0;
       font-size: 0.6rem;
+      font-weight: 700;
       opacity: 0;
       transform: scale(0.8);
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
-    .newspaper.dark .curriculum-item .badge-count { background: #FFAE56; color: #1a0a00; }
     .curriculum-item:hover .badge-count {
       opacity: 1;
       transform: scale(1);
     }
     .curriculum-item.active-item {
-      background: rgba(255,106,28,0.12);
-      border-left: 3px solid #FF6A1C;
-      padding-left: 0.8rem;
-    }
-    .newspaper.dark .curriculum-item.active-item {
-      background: rgba(255,174,86,0.12);
-      border-left-color: #FFAE56;
+      background: var(--blue);
+      color: #000;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--line);
     }
 
     /* Work items (full width) */
     .work-item {
       font-size: 0.8rem;
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px dotted #d4a57a;
+      padding: 0.7rem 0.8rem;
+      margin-bottom: 0.6rem;
+      background: var(--chip);
+      border: 3px solid var(--line);
+      box-shadow: 5px 5px 0 var(--line);
+      border-radius: 0;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease, padding 0.3s ease;
-      border-radius: 4px;
-      color: #444;
-    }
-    .newspaper.dark .work-item {
-      border-bottom-color: #3d2a1a;
-      color: #bbb;
+      transition: transform 0.18s var(--snap), box-shadow 0.18s var(--snap), background 0.2s ease;
+      color: var(--ink);
     }
     .work-item:hover {
-      background: rgba(255,106,28,0.08);
-      padding-left: 0.8rem;
-      transform: translateX(4px);
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0 var(--line);
+    }
+    .work-item:active {
+      transform: translate(0, 0) scale(0.99);
+      box-shadow: 4px 4px 0 var(--line);
     }
     .work-item.active-item {
-      background: rgba(255,106,28,0.12);
-      border-left: 3px solid #FF6A1C;
-      padding-left: 0.8rem;
+      background: var(--blue);
+      color: #000;
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 var(--line);
     }
-    .newspaper.dark .work-item.active-item {
-      background: rgba(255,174,86,0.12);
-      border-left-color: #FFAE56;
+    .work-item .job-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.8rem;
+      color: var(--pink);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
-    .work-item .job-title { font-weight: 600; color: #FF6A1C; }
-    .newspaper.dark .work-item .job-title { color: #FFAE56; }
-    .work-item .job-date { font-size: 0.7rem; color: #999; }
-    .work-item .job-tech { color: #F5788B; font-size: 0.75rem; margin-top: 0.2rem; }
-    .work-item .job-desc { font-size: 0.75rem; color: #666; margin-top: 0.2rem; line-height: 1.5; display: none; }
-    .newspaper.dark .work-item .job-desc { color: #999; }
+    .work-item .job-date { font-size: 0.7rem; color: var(--muted); font-weight: 600; }
+    .work-item .job-tech { color: var(--blue); font-size: 0.75rem; margin-top: 0.25rem; font-weight: 600; }
+    .work-item .job-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      padding-top: 0.4rem;
+      border-top: 2px dashed var(--line);
+      line-height: 1.6;
+      display: none;
+    }
     .work-item .job-desc.open { display: block; }
+    .work-item.active-item .job-title { color: #000; }
+    .work-item.active-item .job-tech { color: #0A2A33; }
+    .work-item.active-item .job-date { color: #333; }
+    .work-item.active-item .job-desc { color: #111; }
 
     /* Projects Grid */
     .project-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.8rem;
+      gap: 1rem;
     }
     .project-item {
-      border: 1px solid #d4a57a;
-      border-radius: 4px;
-      padding: 0.6rem;
+      border: 3px solid var(--line);
+      border-radius: 0;
+      padding: 0.7rem;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      background: rgba(255,255,255,0.5);
-    }
-    .newspaper.dark .project-item {
-      border-color: #3d2a1a;
-      background: rgba(255,255,255,0.03);
+      transition: transform 0.18s var(--snap), box-shadow 0.18s var(--snap);
+      background: var(--chip);
+      box-shadow: 5px 5px 0 var(--line);
+      color: var(--ink);
     }
     .project-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(255,106,28,0.1);
-      background: rgba(255,106,28,0.04);
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0 var(--line);
     }
     .project-item img {
       width: 100%;
-      border-radius: 3px;
-      margin-bottom: 0.4rem;
+      border: 2px solid var(--line);
+      border-radius: 0;
+      margin-bottom: 0.5rem;
       display: block;
     }
     .project-item h4 {
-      font-family: 'Yusei Magic', cursive;
-      font-size: 0.85rem;
-      color: #2d1a0a;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.8rem;
+      color: var(--ink);
+      text-transform: uppercase;
     }
-    .newspaper.dark .project-item h4 { color: #f0e0d0; }
     .project-item .project-tech {
       font-size: 0.65rem;
-      color: #F5788B;
+      color: var(--pink);
+      font-weight: 700;
       margin-bottom: 0.3rem;
     }
     .project-item .project-desc {
-      font-size: 0.7rem;
-      color: #666;
-      line-height: 1.5;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.55;
       display: none;
+      margin-top: 0.3rem;
     }
-    .newspaper.dark .project-item .project-desc { color: #999; }
     .project-item .project-desc.open { display: block; }
     .project-item .project-links {
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
       display: flex;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
     .project-item .project-links a {
       font-size: 0.65rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 3px;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 0;
       text-decoration: none;
-      transition: all 0.2s;
+      border: 2px solid var(--line);
+      color: #000;
+      box-shadow: 2px 2px 0 var(--line);
+      transition: transform 0.15s var(--snap), box-shadow 0.15s var(--snap);
+      display: inline-block;
     }
-    .project-item .project-links .link-demo {
-      border: 1px solid #FF6A1C;
-      color: #FF6A1C;
+    .project-item .project-links .link-demo { background: var(--lime); }
+    .project-item .project-links .link-code { background: var(--blue); }
+    .project-item .project-links a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--line);
     }
-    .project-item .project-links .link-demo:hover {
-      background: #FF6A1C;
-      color: #fff;
-    }
-    .project-item .project-links .link-code {
-      border: 1px solid #F5788B;
-      color: #F5788B;
-    }
-    .project-item .project-links .link-code:hover {
-      background: #F5788B;
-      color: #fff;
+    .project-item .project-links a:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--line);
     }
 
     /* Hanko Seal */
     .hanko-wrap {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
     .hanko {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 70px;
-      height: 70px;
-      border: 3px solid #FF6A1C;
+      width: 74px;
+      height: 74px;
+      border: 4px solid var(--line);
       border-radius: 50%;
-      font-family: 'Yusei Magic', cursive;
-      font-size: 1rem;
-      color: #FF6A1C;
+      background: var(--lime);
+      color: #000;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 0.95rem;
+      text-transform: uppercase;
       transform: rotate(-8deg);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: box-shadow 0.2s ease;
+      box-shadow: 5px 5px 0 var(--line);
       cursor: pointer;
       user-select: none;
       animation: hankoFloat 4s ease-in-out infinite;
     }
     .hanko:hover {
-      transform: rotate(0deg) scale(1.1);
-      box-shadow: 0 0 20px rgba(255,106,28,0.3);
+      box-shadow: 8px 8px 0 var(--pink);
     }
     .hanko.stamped {
       animation: stampBurst 0.5s ease;
@@ -627,34 +809,31 @@
     /* Quote Box */
     .quote-box {
       text-align: center;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border-left: 3px solid #FF6A1C;
-      background: rgba(255,106,28,0.06);
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      border: 3px solid var(--line);
+      background: var(--blue);
+      color: #000;
+      box-shadow: 6px 6px 0 var(--line);
+      border-radius: 0;
       font-style: italic;
-      font-size: 0.85rem;
-      color: #666;
+      font-weight: 500;
+      font-size: 0.9rem;
       min-height: 3.5em;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-    .newspaper.dark .quote-box {
-      border-left-color: #FFAE56;
-      background: rgba(255,174,86,0.06);
-      color: #bbb;
+      transition: background 0.3s ease;
     }
     .quote-box:hover {
-      background: rgba(255,106,28,0.1);
-      border-left-color: #F5788B;
+      background: var(--pink);
     }
     .quote-box .cursor-blink {
       display: inline-block;
-      width: 2px;
+      width: 3px;
       height: 1em;
-      background: #FF6A1C;
-      margin-left: 2px;
+      background: #000;
+      margin-left: 3px;
       animation: blink 0.8s step-end infinite;
       vertical-align: text-bottom;
     }
@@ -664,47 +843,48 @@
     }
 
     /* CTA */
-    .cta-wrap { text-align: center; margin-bottom: 1rem; }
+    .cta-wrap { text-align: center; margin-bottom: 1.2rem; }
     .btn-cta {
       display: inline-block;
-      font-family: 'Yusei Magic', cursive;
-      font-size: 1.1rem;
-      color: #fff;
-      background: #FF6A1C;
-      padding: 0.7rem 2.2rem;
-      border-radius: 4px;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.05rem;
+      color: #000;
+      background: var(--pink);
+      padding: 0.8rem 2.4rem;
+      border: 3px solid var(--line);
+      border-radius: 0;
       text-decoration: none;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      letter-spacing: 0.1em;
+      transition: transform 0.18s var(--snap), box-shadow 0.18s var(--snap);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       position: relative;
-      box-shadow: 0 0 0 0 rgba(255,106,28,0.4);
-      animation: ctaGlow 2s ease-in-out infinite;
+      box-shadow: 6px 6px 0 var(--line);
     }
     .btn-cta:hover {
-      background: #e05500;
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 6px 20px rgba(255,106,28,0.4);
-      animation: none;
+      transform: translate(-3px, -3px);
+      box-shadow: 10px 10px 0 var(--line);
     }
     .btn-cta:active {
-      transform: translateY(0) scale(0.98);
-    }
-    @keyframes ctaGlow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,106,28,0.4); }
-      50% { box-shadow: 0 0 16px 4px rgba(255,106,28,0.25); }
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 var(--line);
     }
     .btn-cta .sub {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 0.65rem;
-      opacity: 0.8;
+      font-weight: 600;
+      opacity: 0.85;
       display: block;
+      text-transform: none;
+      letter-spacing: 0;
+      color: #000;
+      margin-top: 0.15rem;
     }
 
     /* Tech Grid: 4 columns */
     .tech-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.3rem 0.8rem;
+      gap: 0.5rem 0.8rem;
     }
     @media (max-width: 700px) {
       .tech-grid { grid-template-columns: repeat(2, 1fr); }
@@ -714,7 +894,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       z-index: 900;
       display: none;
       align-items: center;
@@ -730,18 +910,16 @@
       to { opacity: 1; }
     }
     .modal-box {
-      background: #fdf6ee;
-      border-radius: 12px;
+      background: var(--card);
+      border: 4px solid var(--line);
+      border-radius: 0;
       max-width: 440px;
       width: 100%;
       padding: 1.5rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      box-shadow: 12px 12px 0 var(--line);
       position: relative;
+      color: var(--ink);
       animation: modalSlideIn 0.25s ease;
-    }
-    .newspaper.dark .modal-box {
-      background: #1a1210;
-      border: 1px solid #3d2a1a;
     }
     @keyframes modalSlideIn {
       from { transform: translateY(20px) scale(0.95); opacity: 0; }
@@ -750,29 +928,44 @@
     .modal-close {
       position: absolute;
       top: 0.6rem;
-      right: 0.8rem;
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: #999;
-      transition: color 0.2s;
-    }
-    .modal-close:hover { color: #FF6A1C; }
-    .modal-box h4 {
-      font-family: 'Yusei Magic', cursive;
-      color: #FF6A1C;
+      right: 0.7rem;
+      background: var(--chip);
+      border: 2px solid var(--line);
+      border-radius: 0;
+      width: 28px;
+      height: 28px;
       font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      padding-right: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--ink);
+      box-shadow: 2px 2px 0 var(--line);
+      transition: transform 0.15s var(--snap), box-shadow 0.15s var(--snap), color 0.2s ease;
     }
-    .newspaper.dark .modal-box h4 { color: #FFAE56; }
+    .modal-close:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--line);
+      color: var(--pink);
+    }
+    .modal-box h4 {
+      font-family: 'Archivo Black', sans-serif;
+      color: #000;
+      background: var(--pink);
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+      font-size: 0.95rem;
+      margin-bottom: 0.9rem;
+      padding: 0.25rem 0.7rem;
+      max-width: calc(100% - 2.6rem);
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
     .modal-box p {
       font-size: 0.85rem;
-      color: #444;
+      color: var(--ink);
       line-height: 1.7;
+      opacity: 0.92;
     }
-    .newspaper.dark .modal-box p { color: #bbb; }
 
     /* Retro Pixel Dog */
     #dogCanvas {
@@ -785,50 +978,82 @@
       image-rendering: crisp-edges;
     }
 
-    #treeCanvas {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      z-index: 998;
-      pointer-events: auto;
-      cursor: pointer;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-    }
-
-    body.dark #dogCanvas,
-    body.dark #treeCanvas {
+    body.dark #dogCanvas {
       filter: brightness(0.65) saturate(0.5);
     }
 
-    .curriculum-item .bi-dot { color: #FF6A1C; font-size: 0.5rem; vertical-align: middle; }
-    .newspaper.dark .curriculum-item .bi-dot { color: #FFAE56; }
+    .curriculum-item .bi-dot { color: var(--pink); font-size: 0.5rem; vertical-align: middle; }
 
     /* Footer */
     .footer {
-      border-top: 1px solid #d4a57a;
-      padding-top: 0.5rem;
+      border-top: 4px solid var(--line);
+      padding-top: 0.7rem;
       text-align: center;
       font-size: 0.7rem;
-      color: #999;
-      letter-spacing: 0.1em;
-    }
-    .newspaper.dark .footer {
-      border-top-color: #3d2a1a;
-      color: #666;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     @media (max-width: 700px) {
-      .newspaper { padding: 1rem; }
+      .newspaper { padding: 1rem; border-width: 3px; box-shadow: 8px 8px 0 var(--line); }
       .content-grid { grid-template-columns: 1fr; }
       .profile-img { width: 120px; }
       .article { columns: 1; }
       .curriculum-grid { grid-template-columns: 1fr; }
       .project-grid { grid-template-columns: 1fr; }
-      .headline-main { font-size: 1.8rem; }
-      .headline-main .accent { font-size: 2.2rem; }
-      .extra-banner .extra-left { font-size: 1.2rem; }
+      .headline-main { font-size: 1.5rem; text-shadow: 3px 3px 0 var(--pink); }
+      .extra-banner .extra-left { font-size: 1.15rem; }
+      .extra-banner { flex-wrap: wrap; gap: 0.3rem; }
+      .section h3 { font-size: 0.8rem; }
+      .ticker { margin-left: -1rem; margin-right: -1rem; }
+      .sticker { display: none; }
+      .back-top { bottom: 6rem; right: 0.8rem; width: 42px; height: 42px; }
     }
+
+    /* Back to Top */
+    .back-top {
+      position: fixed;
+      bottom: 7rem;
+      right: 1.2rem;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--pink);
+      color: #000;
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0 #000;
+      cursor: pointer;
+      z-index: 1500;
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s var(--snap), box-shadow 0.18s var(--snap);
+    }
+    .back-top.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .back-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 8px 8px 0 #000;
+    }
+    .back-top:active {
+      transform: translateY(2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+    body.dark .back-top {
+      border-color: var(--line);
+      box-shadow: 5px 5px 0 var(--line);
+    }
+    body.dark .back-top:hover { box-shadow: 8px 8px 0 var(--line); }
+    body.dark .back-top:active { box-shadow: 2px 2px 0 var(--line); }
 
     /* Radio Player */
     .radio-player {
@@ -839,25 +1064,24 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 10px;
-      border: 1px solid rgba(212,165,122,0.4);
-      border-radius: 8px;
-      background: rgba(253,246,238,0.85);
-      backdrop-filter: blur(4px);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 7px 11px;
+      border: 3px solid #000;
+      border-radius: 0;
+      background: var(--card);
+      box-shadow: 5px 5px 0 #000;
     }
     body.dark .radio-player {
-      background: rgba(26,18,16,0.85);
-      border-color: rgba(61,42,26,0.6);
+      border-color: var(--line);
+      box-shadow: 5px 5px 0 var(--line);
     }
     .radio-player i {
       cursor: pointer;
-      color: #FF6A1C;
+      color: #000;
       font-size: 1.1rem;
-      transition: transform 0.2s, color 0.2s;
+      transition: transform 0.15s, color 0.2s;
     }
     body.dark .radio-player i {
-      color: #FFAE56;
+      color: var(--line);
     }
     .radio-player i:hover {
       transform: scale(1.25);
@@ -889,18 +1113,27 @@
     <span class="extra-left">PORTFOLIO</span>
     <span class="extra-price">DEVELOPER EDITION</span>
     <span class="extra-right" style="display:flex;align-items:center;gap:8px;">
-      <span>FULLSTACK DEVELOPER</span>
+      <span>LARAVEL DEVELOPER</span>
       <label style="display:inline-flex;align-items:center;cursor:pointer;position:relative;top:1px;">
         <input type="checkbox" id="darkToggle" style="display:none">
-        <span style="width:32px;height:18px;background:#ccc;border-radius:9px;position:relative;transition:background 0.3s;display:inline-block;flex-shrink:0;" id="toggleTrack">
-          <span style="position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform 0.3s;" id="toggleThumb"></span>
+        <span style="width:36px;height:20px;background:#fff;position:relative;transition:background 0.3s;display:inline-block;flex-shrink:0;" id="toggleTrack">
+          <span style="position:absolute;top:2px;left:2px;width:12px;height:12px;background:#000;transition:transform 0.3s;" id="toggleThumb"></span>
         </span>
       </label>
     </span>
   </div>
 
+  <!-- Marquee Ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-content">PORTFOLIO ✦ LARAVEL DEVELOPER ✦ AGENTIC DEV ✦ TDD ✦ SPEC-DRIVEN ✦ VUE.JS ✦ NUXT ✦&nbsp;</span>
+      <span class="ticker-content">PORTFOLIO ✦ LARAVEL DEVELOPER ✦ AGENTIC DEV ✦ TDD ✦ SPEC-DRIVEN ✦ VUE.JS ✦ NUXT ✦&nbsp;</span>
+    </div>
+  </div>
+
   <!-- Headline -->
   <div class="headline-wrap reveal">
+    <span class="sticker sticker-2">SPEC DRIVEN</span>
     <div class="headline-main">
       <span class="accent letter">J</span><span class="letter">O</span><span class="letter">H</span><span class="letter">N</span>
       <span class="letter"> </span>
@@ -908,6 +1141,7 @@
       <span class="letter"> </span>
       <span class="letter">N</span><span class="letter">A</span><span class="letter">R</span><span class="letter">V</span><span class="letter">A</span><span class="letter">S</span><span class="letter">A</span>
     </div>
+    <div class="headline-sub">Mid-Level Fullstack Laravel Developer | Agentic Development &amp; TDD</div>
 
   </div>
 
@@ -916,62 +1150,81 @@
     <div class="profile-box">
       <div class="profile-img-wrap" id="profileWrap">
         <img src="assets/images/narvs.jpg" alt="John Paul Narvasa" class="profile-img" id="profileImg">
-        <div class="profile-tooltip">"Fullstack • Spec Driven • Laravel"</div>
+        <div class="profile-tooltip">"Laravel • Agentic Dev • TDD"</div>
+        <span class="sticker sticker-1">4 YRS EXP</span>
       </div>
-      <div class="profile-name"><span class="emoji-icon"><i class="bi bi-laptop"></i></span> JP Narvasa</div>
-      <div class="profile-title">Fullstack Developer</div>
+      <div class="profile-name"><span class="emoji-icon"><i class="bi bi-laptop"></i></span> Narvs</div>
+      <div class="profile-title">Mid-Level Fullstack Laravel Developer</div>
       <div class="contact-info">
-        <i class="bi bi-geo-alt-fill"></i>Quezon City<br>
-        <i class="bi bi-telephone"></i>09216447527<br>
-        <i class="bi bi-envelope-check-fill"></i>johnpaulnarvasa6@gmail.com<br>
-        <i class="bi bi-github"></i><a href="https://github.com/NARVS1999" target="_blank" style="color:inherit;text-decoration:underline;"> GitHub</a> |
-        <a href="https://www.linkedin.com/in/john-paul-narvasa-945034211" target="_blank" style="color:inherit;text-decoration:underline;"> LinkedIn</a> |
-        <a href="https://narvs1999.github.io/backend-concept/" target="_blank" style="color:inherit;text-decoration:underline;"> MyCourses</a>
+        <div class="c-row"><i class="bi bi-geo-alt-fill"></i><span>Quezon City</span></div>
+        <div class="c-row"><i class="bi bi-telephone"></i><span>09216447527</span></div>
+        <div class="c-row"><i class="bi bi-envelope-check-fill"></i><span>johnpaulnarvasa6@gmail.com</span></div>
+        <div class="c-row"><i class="bi bi-github"></i><a href="https://github.com/NARVS1999" target="_blank" style="color:inherit;text-decoration:underline;">GitHub</a><span class="c-sep">|</span><a href="https://www.linkedin.com/in/john-paul-narvasa-945034211" target="_blank" style="color:inherit;text-decoration:underline;">LinkedIn</a></div>
       </div>
     </div>
 
     <div class="article">
-      <p class="dropcap">Fullstack Developer with 3+ years of experience bridging legacy systems (Laravel 6, ExtJS) and modern stacks (Next.js, Nuxt, Vue.js). Passionate about integrating AI-assisted development workflows through Spec Driven Development and agentic coding practices to improve team productivity and code quality.</p>
-      <p>I follow a structured Jira-based workflow: task discussion, planning, implementation with unit tests, manual verification, PR creation, review, and merge. I've contributed to teams transitioning to Agentic Coding by integrating Claude Code with comprehensive project context files ensuring AI-generated code remained compatible with the existing codebase.</p>
-      <p>I apply Spec Driven Development using OpenCode CLI and GSD workflow on internal tooling and side projects, and build with Next.js, Laravel, PHPUnit, Vitest, and Playwright to refine agentic workflow practices.</p>
+      <span class="brut-tag">Professional Summary</span>
+      <p class="dropcap">Fullstack Laravel Developer with 4 years of professional experience, progressing from junior web developer and QA roles to tech co-founder, team mentor, and now contributing to agentic TDD workflows on production systems.</p>
+      <p>Built and maintained apps across legacy (Laravel 6, ExtJS) and modern stacks (Laravel 11, Vue.js, Nuxt.js).</p>
     </div>
   </div>
 
   <!-- Technologies -->
   <div class="section reveal">
-    <h3><i class="bi bi-cpu" style="vertical-align:middle;margin-right:4px;"></i> SKILLS &amp; TECHNOLOGIES</h3>
-    <div class="tech-grid">
-      <div class="curriculum-item" data-tech="Vitest"><i class="bi bi-check-circle-fill" style="color:#FF6A1C;font-size:0.55rem;"></i> Vitest</div>
-      <div class="curriculum-item" data-tech="PHPUnit"><i class="bi bi-check-circle-fill" style="color:#FF6A1C;font-size:0.55rem;"></i> PHPUnit</div>
-      <div class="curriculum-item" data-tech="Playwright"><i class="bi bi-browser-chrome" style="color:#FF6A1C;font-size:0.75rem;"></i> Playwright</div>
-      <div class="curriculum-item" data-tech="ExtJS"><i class="bi bi-window-stack" style="color:#FF6A1C;font-size:0.75rem;"></i> ExtJS</div>
-      <div class="curriculum-item" data-tech="Next.js"><i class="bi bi-code-slash" style="color:#FF6A1C;font-size:0.75rem;"></i> Next.js</div>
-      <div class="curriculum-item" data-tech="OpenCode CLI"><i class="bi bi-terminal" style="color:#FF6A1C;font-size:0.75rem;"></i> OpenCode CLI</div>
-      <div class="curriculum-item" data-tech="Claude Code CLI"><i class="bi bi-robot" style="color:#FF6A1C;font-size:0.75rem;"></i> Claude Code CLI</div>
-      <div class="curriculum-item" data-tech="Spec Driven Dev"><i class="bi bi-diagram-3" style="color:#FF6A1C;font-size:0.75rem;"></i> Spec Driven Dev</div>
-      <div class="curriculum-item" data-tech="Laravel"><i class="bi bi-gear" style="color:#FF6A1C;font-size:0.75rem;"></i> Laravel</div>
-      <div class="curriculum-item" data-tech="Vue.js"><i class="bi bi-braces" style="color:#FF6A1C;font-size:0.75rem;"></i> Vue.js</div>
-      <div class="curriculum-item" data-tech="Nuxt.js"><i class="bi bi-braces" style="color:#FF6A1C;font-size:0.75rem;"></i> Nuxt.js</div>
-      <div class="curriculum-item" data-tech="Vuetify"><i class="bi bi-palette" style="color:#FF6A1C;font-size:0.75rem;"></i> Vuetify</div>
-      <div class="curriculum-item" data-tech="Tailwind CSS"><i class="bi bi-brush" style="color:#FF6A1C;font-size:0.75rem;"></i> Tailwind CSS</div>
-      <div class="curriculum-item" data-tech="Bootstrap"><i class="bi bi-grid-3x3-gap" style="color:#FF6A1C;font-size:0.75rem;"></i> Bootstrap</div>
-      <div class="curriculum-item" data-tech="jQuery"><i class="bi bi-lightning" style="color:#FF6A1C;font-size:0.75rem;"></i> jQuery</div>
-      <div class="curriculum-item" data-tech="JavaScript"><i class="bi bi-filetype-js" style="color:#FF6A1C;font-size:0.85rem;"></i> JavaScript</div>
-      <div class="curriculum-item" data-tech="TypeScript"><i class="bi bi-filetype-tsx" style="color:#FF6A1C;font-size:0.85rem;"></i> TypeScript</div>
-      <div class="curriculum-item" data-tech="PHP"><i class="bi bi-filetype-php" style="color:#FF6A1C;font-size:0.85rem;"></i> PHP</div>
-      <div class="curriculum-item" data-tech="MySQL"><i class="bi bi-database" style="color:#FF6A1C;font-size:0.75rem;"></i> MySQL</div>
-      <div class="curriculum-item" data-tech="MSSQL"><i class="bi bi-database" style="color:#FF6A1C;font-size:0.75rem;"></i> MSSQL</div>
-      <div class="curriculum-item" data-tech="HTML5"><i class="bi bi-filetype-html" style="color:#FF6A1C;font-size:0.85rem;"></i> HTML5</div>
-      <div class="curriculum-item" data-tech="CSS3"><i class="bi bi-filetype-css" style="color:#FF6A1C;font-size:0.85rem;"></i> CSS3</div>
-      <div class="curriculum-item" data-tech="Git"><i class="bi bi-git" style="color:#FF6A1C;font-size:0.75rem;"></i> Git</div>
-      <div class="curriculum-item" data-tech="PhpMyAdmin"><i class="bi bi-database-gear" style="color:#FF6A1C;font-size:0.75rem;"></i> PhpMyAdmin</div>
-      <div class="curriculum-item" data-tech="Hostinger"><i class="bi bi-cloud-arrow-up" style="color:#FF6A1C;font-size:0.75rem;"></i> Hostinger</div>
-      <div class="curriculum-item" data-tech="Figma"><i class="bi bi-pencil-fill" style="color:#FF6A1C;font-size:0.65rem;"></i> Figma</div>
-      <div class="curriculum-item" data-tech="Azure DevOps"><i class="bi bi-cloud-check" style="color:#FF6A1C;font-size:0.75rem;"></i> Azure DevOps</div>
-      <div class="curriculum-item" data-tech="Jenkins"><i class="bi bi-arrow-repeat" style="color:#FF6A1C;font-size:0.75rem;"></i> Jenkins</div>
-      <div class="curriculum-item" data-tech="Bitbucket"><i class="bi bi-git" style="color:#FF6A1C;font-size:0.75rem;"></i> Bitbucket</div>
-      <div class="curriculum-item" data-tech="AWS"><i class="bi bi-cloud" style="color:#FF6A1C;font-size:0.75rem;"></i> AWS</div>
-      <div class="curriculum-item" data-tech="MySQL Workbench"><i class="bi bi-database" style="color:#FF6A1C;font-size:0.75rem;"></i> MySQL Workbench</div>
+    <h3><i class="bi bi-cpu" style="vertical-align:middle;margin-right:4px;"></i> CORE SKILLS</h3>
+    <div class="skill-group">
+      <span class="brut-tag">Backend</span>
+      <div class="tech-grid">
+        <div class="curriculum-item" data-tech="Laravel"><i class="bi bi-gear" style="color:#FF4FA3;font-size:0.75rem;"></i> Laravel</div>
+        <div class="curriculum-item" data-tech="Eloquent ORM"><i class="bi bi-database-check" style="color:#FF4FA3;font-size:0.75rem;"></i> Eloquent ORM</div>
+        <div class="curriculum-item" data-tech="PHP"><i class="bi bi-filetype-php" style="color:#FF4FA3;font-size:0.85rem;"></i> PHP</div>
+        <div class="curriculum-item" data-tech="MySQL"><i class="bi bi-database" style="color:#FF4FA3;font-size:0.75rem;"></i> MySQL</div>
+        <div class="curriculum-item" data-tech="MSSQL"><i class="bi bi-database" style="color:#FF4FA3;font-size:0.75rem;"></i> MSSQL</div>
+        <div class="curriculum-item" data-tech="RESTful API design"><i class="bi bi-arrow-left-right" style="color:#FF4FA3;font-size:0.75rem;"></i> RESTful API design</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="brut-tag tag-blue">Frontend</span>
+      <div class="tech-grid">
+        <div class="curriculum-item" data-tech="Vue.js"><i class="bi bi-braces" style="color:#FF4FA3;font-size:0.75rem;"></i> Vue.js</div>
+        <div class="curriculum-item" data-tech="Nuxt.js"><i class="bi bi-braces" style="color:#FF4FA3;font-size:0.75rem;"></i> Nuxt.js</div>
+        <div class="curriculum-item" data-tech="Vuetify"><i class="bi bi-palette" style="color:#FF4FA3;font-size:0.75rem;"></i> Vuetify</div>
+        <div class="curriculum-item" data-tech="Ext.js"><i class="bi bi-window-stack" style="color:#FF4FA3;font-size:0.75rem;"></i> Ext.js</div>
+        <div class="curriculum-item" data-tech="Tailwind CSS"><i class="bi bi-brush" style="color:#FF4FA3;font-size:0.75rem;"></i> Tailwind CSS</div>
+        <div class="curriculum-item" data-tech="Bootstrap"><i class="bi bi-grid-3x3-gap" style="color:#FF4FA3;font-size:0.75rem;"></i> Bootstrap</div>
+        <div class="curriculum-item" data-tech="JavaScript"><i class="bi bi-filetype-js" style="color:#FF4FA3;font-size:0.85rem;"></i> JavaScript</div>
+        <div class="curriculum-item" data-tech="TypeScript"><i class="bi bi-filetype-tsx" style="color:#FF4FA3;font-size:0.85rem;"></i> TypeScript</div>
+        <div class="curriculum-item" data-tech="HTML5"><i class="bi bi-filetype-html" style="color:#FF4FA3;font-size:0.85rem;"></i> HTML5</div>
+        <div class="curriculum-item" data-tech="CSS3"><i class="bi bi-filetype-css" style="color:#FF4FA3;font-size:0.85rem;"></i> CSS3</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="brut-tag tag-lime">Testing</span>
+      <div class="tech-grid">
+        <div class="curriculum-item" data-tech="TDD"><i class="bi bi-check2-square" style="color:#FF4FA3;font-size:0.75rem;"></i> TDD</div>
+        <div class="curriculum-item" data-tech="PHPUnit"><i class="bi bi-check-circle-fill" style="color:#FF4FA3;font-size:0.55rem;"></i> PHPUnit</div>
+        <div class="curriculum-item" data-tech="Vitest"><i class="bi bi-check-circle-fill" style="color:#FF4FA3;font-size:0.55rem;"></i> Vitest</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="brut-tag tag-yellow">DevOps &amp; Tools</span>
+      <div class="tech-grid">
+        <div class="curriculum-item" data-tech="Git"><i class="bi bi-git" style="color:#FF4FA3;font-size:0.75rem;"></i> Git</div>
+        <div class="curriculum-item" data-tech="Azure DevOps"><i class="bi bi-cloud-check" style="color:#FF4FA3;font-size:0.75rem;"></i> Azure DevOps</div>
+        <div class="curriculum-item" data-tech="Jenkins"><i class="bi bi-arrow-repeat" style="color:#FF4FA3;font-size:0.75rem;"></i> Jenkins</div>
+        <div class="curriculum-item" data-tech="Bitbucket"><i class="bi bi-git" style="color:#FF4FA3;font-size:0.75rem;"></i> Bitbucket</div>
+        <div class="curriculum-item" data-tech="AWS"><i class="bi bi-cloud" style="color:#FF4FA3;font-size:0.75rem;"></i> AWS</div>
+        <div class="curriculum-item" data-tech="MySQL Workbench"><i class="bi bi-database" style="color:#FF4FA3;font-size:0.75rem;"></i> MySQL Workbench</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="brut-tag tag-white">Workflow</span>
+      <div class="tech-grid">
+        <div class="curriculum-item" data-tech="Jira-based Agile workflow"><i class="bi bi-kanban" style="color:#FF4FA3;font-size:0.75rem;"></i> Jira-based Agile workflow</div>
+        <div class="curriculum-item" data-tech="Spec-Driven Development (GSD, BMad, OpenSpec)"><i class="bi bi-diagram-3" style="color:#FF4FA3;font-size:0.75rem;"></i> Spec-Driven Development (GSD, BMad, OpenSpec)</div>
+        <div class="curriculum-item" data-tech="AI-assisted development (Claude Code, OpenCode CLI)"><i class="bi bi-robot" style="color:#FF4FA3;font-size:0.75rem;"></i> AI-assisted development (Claude Code, OpenCode CLI)</div>
+      </div>
     </div>
   </div>
 
@@ -980,33 +1233,54 @@
     <h3>PROFESSIONAL EXPERIENCE — 5 Roles</h3>
     <div class="work-item" data-label="Fullstack Developer — Elgada BPO Solutions Inc">
       <div class="job-title">Fullstack Developer <span class="job-date">| Aug 2025 - Present</span></div>
-      <div class="job-tech">Laravel 6 | ExtJS v5 | Jira | Claude Code | OpenCode CLI | GSD | PHPUnit | Vitest | Playwright</div>
-      <div class="job-tech" style="color:#666;font-size:0.7rem;">Elgada BPO Solutions Inc — Makati</div>
-      <div class="job-desc">Enhanced and maintained ModWatch, an accident employee tracking system, on a legacy Laravel 6 and ExtJS v5 codebase. Followed a structured Jira-based workflow. Contributed to the team's transition to Agentic Coding by integrating Claude Code with comprehensive project context files. Applied Spec Driven Development using OpenCode CLI and GSD workflow on internal tooling and side projects.</div>
+      <div class="job-tech">Laravel 6 | ExtJS v5 | REST APIs | Jira | PHPUnit | Vitest | Claude Code | GSD</div>
+      <div class="job-tech" style="color:var(--muted);font-size:0.7rem;">Elgada BPO Solutions Inc — Makati</div>
+      <div class="job-desc"><ul>
+        <li>Maintain and enhance ModWatch, an accident/employee-tracking system serving thousands of employees, on a legacy Laravel 6 backend and ExtJS v5 frontend, connected through REST APIs.</li>
+        <li>Cut bug-resolution time by 40% by contributing to a structured Jira workflow covering planning, unit-tested implementation, manual verification, PR review, and merge.</li>
+        <li>Contributed to an agentic, TDD-driven delivery workflow: Jira tickets surface requirement gaps and decisions, the AI proposes an implementation plan that I accept, edit, or extend, then I implement it test-first with PHPUnit unit and integration tests.</li>
+        <li>Added a separate-session PR validation step that reviews the implementation against the codebase before merge.</li>
+        <li>Reduced task completion time by 50% and bug-fix time by 70%.</li>
+      </ul></div>
     </div>
     <div class="work-item" data-label="Fullstack Developer — New San Jose Builders Inc">
       <div class="job-title">Fullstack Developer <span class="job-date">| Mar 2025 - Aug 2025</span></div>
-      <div class="job-tech">Nuxt | Laravel | Vuetify | MySQL</div>
-      <div class="job-tech" style="color:#666;font-size:0.7rem;">New San Jose Builders Inc — Quezon City</div>
-      <div class="job-desc">Co-developed CasaFlow, a custom project management system tailored to internal teams. Built responsive and modular components using Nuxt, Laravel, Vuetify, and MySQL. Focused primarily on ShareBNB, a custom Airbnb system for the company's units, hotel, and resort.</div>
+      <div class="job-tech">Laravel 11 | Nuxt | Vuetify | MySQL</div>
+      <div class="job-tech" style="color:var(--muted);font-size:0.7rem;">New San Jose Builders Inc — Quezon City</div>
+      <div class="job-desc"><ul>
+        <li>Co-developed CasaFlow (project management, 3 departments) and ShareBNB (booking platform, 50+ listings) using Laravel 11, Nuxt, Vuetify, and MySQL.</li>
+        <li>Built 15+ responsive, modular components, cutting development time by 30%.</li>
+        <li>Optimized database queries, improving page-load speed by 25%.</li>
+      </ul></div>
     </div>
     <div class="work-item" data-label="Tech Co-Founder / Lead Web Developer — ADSvanced Media">
-      <div class="job-title">Tech Co-Founder / Lead Web Developer <span class="job-date">| Mar 2023 - Mar 2025</span></div>
-      <div class="job-tech">JavaScript | PHP | jQuery | Bootstrap | Figma | CMS | Booking Systems</div>
-      <div class="job-tech" style="color:#666;font-size:0.7rem;">ADSvanced Media — Quezon City</div>
-      <div class="job-desc">Lead Developer for custom CMS and booking system for multiple clients. Developed high-converting, responsive landing pages with customizable animations, email/chat features, and social media integrations. Managed the internship program and mentoring.</div>
+      <div class="job-title">Tech Co-Founder / Lead Web Developer <span class="job-date">| Oct 2023 - Mar 2025</span></div>
+      <div class="job-tech">PHP | MySQL | JavaScript | Bootstrap | CMS | Booking Systems</div>
+      <div class="job-tech" style="color:var(--muted);font-size:0.7rem;">ADSvanced Media — Quezon City</div>
+      <div class="job-desc"><ul>
+        <li>Led the scaffolding of every client application, setting up the base project structure and architecture.</li>
+        <li>Designed the MySQL database schema and built the backend for a custom CMS and booking system used by multiple clients.</li>
+        <li>Delivered 15+ high-converting landing pages with integrated animations, chat, and social features, lifting client engagement by 35%.</li>
+        <li>Managed the internship program and mentored 2 junior developers.</li>
+      </ul></div>
     </div>
     <div class="work-item" data-label="Jr. System Analyst / QA Engineer — Technomancer Inc">
       <div class="job-title">Junior System Analyst / QA Engineer <span class="job-date">| Dec 2022 - Sep 2023</span></div>
-      <div class="job-tech">PHP | Vue.js | MySQL | Laravel | Bitbucket | jQuery | Bootstrap | JavaScript | CSS3 | HTML5 | AWS | Azure DevOps</div>
-      <div class="job-tech" style="color:#666;font-size:0.7rem;">Technomancer Inc — Quezon City</div>
-      <div class="job-desc">Built dynamic websites for clients using Laravel and Vue.js. Maintained and improved ecommerce websites. Conducted manual tests on a microservices system for Unemployment Insurance Services.</div>
+      <div class="job-tech">PHP | Laravel | Vue.js | MySQL | Bitbucket | AWS | Azure DevOps</div>
+      <div class="job-tech" style="color:var(--muted);font-size:0.7rem;">Technomancer Inc — Quezon City</div>
+      <div class="job-desc"><ul>
+        <li>Built dynamic client websites with Laravel and Vue.js, consistently delivering on schedule.</li>
+        <li>Improved ecommerce site performance, increasing page-load speed by 20%.</li>
+        <li>QA-tested a microservices system for Unemployment Insurance Services, catching 30+ bugs pre-deployment.</li>
+      </ul></div>
     </div>
     <div class="work-item" data-label="Jr. Web Developer — Sprintship Philippines Inc">
       <div class="job-title">Junior Web Developer <span class="job-date">| Jun 2022 - Nov 2022</span></div>
       <div class="job-tech">ASP.Net | .Net | C# | Angular | TypeScript | SQL | Azure DevOps | MS SQL Server | HTML5 | CSS3</div>
-      <div class="job-tech" style="color:#666;font-size:0.7rem;">Sprintship Philippines Inc — BGC, Taguig</div>
-      <div class="job-desc">Managed the Helpdesk ticketing system. Improved system usability for developers, employees, and tenants. Resolved layout problems on different tenant web pages.</div>
+      <div class="job-tech" style="color:var(--muted);font-size:0.7rem;">Sprintship Philippines Inc — BGC, Taguig</div>
+      <div class="job-desc"><ul>
+        <li>Managed a Helpdesk ticketing system (100+ daily tickets) and resolved 30+ layout issues across tenant pages.</li>
+      </ul></div>
     </div>
   </div>
 
@@ -1054,13 +1328,14 @@
 
   <!-- Footer -->
   <div class="footer reveal">
-    JOHN PAUL NARVASA — Fullstack Developer | Spec Driven | Laravel
+    JOHN PAUL NARVASA — Mid-Level Fullstack Laravel Developer | Agentic Dev | TDD
   </div>
 
 </div>
 
-<canvas id="treeCanvas" height="60"></canvas>
 <canvas id="dogCanvas" height="80"></canvas>
+
+<button class="back-top" id="backTop" title="Back to top"><i class="bi bi-arrow-up"></i></button>
 
 <script>
 (function() {
@@ -1100,24 +1375,20 @@
   }
 
   function applyDark(isDark) {
-    const oldBg = isDark
-      ? 'linear-gradient(180deg, #87CEEB 0%, #A8E6CF 70%, #6BBF59 72%, #3D8B37 100%)'
-      : 'linear-gradient(180deg, #0B0D2E 0%, #131744 50%, #080A1F 100%)';
-    const newBg = isDark
-      ? 'linear-gradient(180deg, #0B0D2E 0%, #131744 50%, #080A1F 100%)'
-      : 'linear-gradient(180deg, #87CEEB 0%, #A8E6CF 70%, #6BBF59 72%, #3D8B37 100%)';
+    const oldBg = isDark ? '#FFE500' : '#121212';
+    const newBg = isDark ? '#121212' : '#FFE500';
 
     document.body.style.background = oldBg;
 
     if (isDark) {
       document.body.classList.add('dark');
       newspaper.classList.add('dark');
-      toggleTrack.style.background = '#FF6A1C';
-      toggleThumb.style.transform = 'translateX(14px)';
+      toggleTrack.style.background = '#FF4FA3';
+      toggleThumb.style.transform = 'translateX(18px)';
     } else {
       document.body.classList.remove('dark');
       newspaper.classList.remove('dark');
-      toggleTrack.style.background = '#ccc';
+      toggleTrack.style.background = '#FFFFFF';
       toggleThumb.style.transform = 'translateX(0)';
     }
 
@@ -1251,8 +1522,6 @@
 
     const dogs = [
       { scale: 0.6, x: 180 },
-      { scale: 0.7, x: 240 }, 
-      { scale: 0.8, x: 120 }, 
     ];
 
     const dust = [];
@@ -1265,7 +1534,7 @@
 
     function drawDust() {
       for (const p of dust) {
-        ctx.fillStyle = 'rgba(255,106,28,0.12)';
+        ctx.fillStyle = 'rgba(255,79,163,0.35)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
@@ -1314,7 +1583,6 @@
       ctx.imageSmoothingEnabled = false;
       const img = images[frameIdx];
 
-      // draw small dog first (behind), then big dog on top
       for (let i = dogs.length - 1; i >= 0; i--) {
         const d = dogs[i];
         const sh = Math.round(img.height * d.scale);
@@ -1327,118 +1595,9 @@
     requestAnimationFrame(animate);
   })();
 
-  /* ===== Tree Growth Animation ===== */
-  (function() {
-    const canvas = document.getElementById('treeCanvas');
-    const ctx = canvas.getContext('2d');
-    const H = 60;
-    const FRAME_COUNT = 6;
-    const FRAME_DELAYS = [300, 400, 500, 600, 700, 700];
-    const images = [];
-    let loaded = 0;
-    let ready = false;
-
-    for (let i = 0; i < FRAME_COUNT; i++) {
-      const img = new Image();
-      img.onload = function() {
-        loaded++;
-        if (loaded === FRAME_COUNT) ready = true;
-      };
-      img.src = 'assets/images/grow_' + i + '.png';
-      images.push(img);
-    }
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const flowers = [
-      { scale: 1.7, delay: 0,    x: 0, frameIdx: 0, frameTimer: 0, started: false },
-      { scale: 1.6, delay: 200,  x: 0, frameIdx: 0, frameTimer: 0, started: false },
-      { scale: 1.5, delay: 400,  x: 0, frameIdx: 0, frameTimer: 0, started: false },
-      { scale: 1.3, delay: 600,  x: 0, frameIdx: 0, frameTimer: 0, started: false },
-      { scale: 1.1, delay: 800,  x: 0, frameIdx: 0, frameTimer: 0, started: false },
-      { scale: 1.0, delay: 1000, x: 0, frameIdx: 0, frameTimer: 0, started: false },
-    ];
-
-    function randomizePositions() {
-      const w = canvas.width;
-      const used = [];
-      for (const f of flowers) {
-        let x;
-        let attempts = 0;
-        do {
-          x = 10 + Math.random() * (w - 80);
-          attempts++;
-        } while (attempts < 50 && used.some(u => Math.abs(u - x) < 25));
-        used.push(x);
-        f.x = x;
-      }
-    }
-
-    randomizePositions();
-
-    let appTime = 0;
-
-    function drawFlower(img, x, scale) {
-      const sw = Math.round(img.width * scale);
-      const sh = Math.round(img.height * scale);
-      const dy = H - sh - 3;
-      ctx.drawImage(img, Math.round(x), dy, sw, sh);
-    }
-
-    function resetAll() {
-      appTime = 0;
-      for (const f of flowers) {
-        f.frameIdx = 0;
-        f.frameTimer = 0;
-        f.started = false;
-      }
-      randomizePositions();
-    }
-
-    function animate(time) {
-      ctx.clearRect(0, 0, canvas.width, H);
-      if (!ready) { requestAnimationFrame(animate); return; }
-
-      if (!animate.lastTime) animate.lastTime = time;
-      const dt = time - animate.lastTime;
-      animate.lastTime = time;
-      appTime += dt;
-
-      ctx.imageSmoothingEnabled = false;
-
-      for (const f of flowers) {
-        if (!f.started && appTime >= f.delay) {
-          f.started = true;
-        }
-        if (!f.started) continue;
-
-        if (f.frameIdx < FRAME_COUNT - 1) {
-          f.frameTimer += dt;
-          if (f.frameTimer >= FRAME_DELAYS[f.frameIdx]) {
-            f.frameTimer = 0;
-            f.frameIdx++;
-          }
-        }
-
-        drawFlower(images[f.frameIdx], f.x, f.scale);
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    canvas.addEventListener('click', resetAll);
-    window.addEventListener('resize', randomizePositions);
-
-    requestAnimationFrame(animate);
-  })();
-
   /* ===== 4. Quote Typewriter ===== */
 
-  const quoteText = '"Spec first, code second — build with intention." \u2014 JP Narvasa';
+  const quoteText = '"Spec first, code second — build with intention." \u2014 Narvs';
   const quoteEl = document.getElementById('quoteText');
   const cursorEl = document.getElementById('quoteCursor');
   let idx = 0;
@@ -1483,37 +1642,34 @@
 
   /* ===== 6. Tech Modal ===== */
   const techDescriptions = {
-    'Vitest': 'Fast unit testing framework for Vite-based projects. Used for component and integration testing in modern JavaScript/TypeScript applications.',
-    'PHPUnit': 'Industry-standard testing framework for PHP. Used for unit and feature testing in Laravel applications.',
-    'Playwright': 'End-to-end testing framework by Microsoft. Enables reliable cross-browser testing with auto-waiting and network interception.',
-    'ExtJS': 'Legacy JavaScript framework for building rich desktop-like web applications. Used in maintaining the ModWatch accident tracking system.',
-    'Next.js': 'React framework with server-side rendering, static generation, and API routes. Built for modern fullstack applications.',
-    'OpenCode CLI': 'AI-assisted development CLI tool for Spec Driven Development. Used to implement structured agentic coding workflows.',
-    'Claude Code CLI': 'AI coding assistant by Anthropic. Used for agentic coding with comprehensive project context file integration.',
-    'Spec Driven Dev': 'Methodology for AI-assisted development using structured specifications. Ensures AI-generated code aligns with project architecture (GSD, BMad, OpenSpec).',
     'Laravel': 'PHP web framework with elegant syntax and powerful ORM. Used for building RESTful APIs, CMS platforms, and full-featured web applications.',
+    'Eloquent ORM': "Laravel's ORM with expressive syntax for database queries, relationships, and model interactions across production applications.",
+    'PHP': 'Server-side scripting language powering Laravel and custom CMS platforms. Primary backend language for web applications.',
+    'MySQL': 'Open-source relational database management system. Used for data storage and retrieval in Laravel and PHP applications.',
+    'MSSQL': 'Microsoft SQL Server - enterprise relational database. Used in corporate environments requiring robust data management.',
+    'RESTful API design': 'Design and integration of RESTful APIs - resource modeling, endpoints, and JSON contracts connecting Ext.js and Vue frontends to Laravel backends.',
     'Vue.js': 'Progressive JavaScript framework for building interactive user interfaces. Used alongside Laravel for dynamic frontend components.',
     'Nuxt.js': 'Vue.js framework with SSR, static generation, and module ecosystem. Used in building CasaFlow project management system.',
     'Vuetify': 'Material Design component library for Vue.js. Used with Nuxt to build responsive, consistent UIs.',
+    'Ext.js': 'Legacy JavaScript framework for building rich desktop-like web applications. Used in maintaining the ModWatch accident tracking system on Laravel 6.',
     'Tailwind CSS': 'Utility-first CSS framework for rapid custom designs. Enables fast prototyping and maintainable responsive layouts.',
     'Bootstrap': 'Popular CSS framework with pre-built components and responsive grid system. Used across multiple client projects.',
-    'jQuery': 'Fast JavaScript library for DOM manipulation, event handling, and AJAX. Used in legacy systems and rapid prototypes.',
     'JavaScript': 'Core language of the web. Used across all projects for both frontend interactivity and server-side logic.',
-    'TypeScript': 'Typed superset of JavaScript that improves tooling, readability, and maintainability. Used in Next.js and Angular projects.',
-    'PHP': 'Server-side scripting language powering Laravel and custom CMS platforms. Primary backend language for web applications.',
-    'MySQL': 'Open-source relational database management system. Used for data storage and retrieval in Laravel and PHP applications.',
-    'MSSQL': 'Microsoft SQL Server — enterprise relational database. Used in corporate environments requiring robust data management.',
+    'TypeScript': 'Typed superset of JavaScript that improves tooling, readability, and maintainability. Used across modern frontend codebases.',
     'HTML5': 'Foundation of web structure with semantic elements, multimedia support, and modern APIs.',
     'CSS3': 'Stylesheet language for visual design including layouts, animations, transitions, and responsive breakpoints.',
+    'TDD': 'Test-Driven Development - write failing tests first, then implement. Core of my agentic delivery workflow with PHPUnit unit and integration tests.',
+    'PHPUnit': 'Industry-standard testing framework for PHP. Used for unit and feature testing in Laravel applications.',
+    'Vitest': 'Fast unit testing framework for Vite-based projects. Used for component and integration testing in modern JavaScript/TypeScript applications.',
     'Git': 'Distributed version control system for tracking changes, branching, and team collaboration on codebases.',
-    'PhpMyAdmin': 'Web-based MySQL administration tool for database management, query execution, and data inspection.',
-    'Hostinger': 'Affordable web hosting and domain registration provider. Used for deploying and managing client websites.',
-    'Figma': 'Cloud-based collaborative design tool for UI/UX. Used for wireframing, prototyping, and design-to-development handoff.',
-    'Azure DevOps': 'Microsoft\'s DevOps platform providing CI/CD pipelines, boards, repos, and test plans for enterprise development.',
+    'Azure DevOps': "Microsoft's DevOps platform providing CI/CD pipelines, boards, repos, and test plans for enterprise development.",
     'Jenkins': 'Open-source automation server for building, testing, and deploying code through CI/CD pipelines.',
     'Bitbucket': 'Git repository hosting with integrated CI/CD and Jira support. Used for source control and team collaboration.',
     'AWS': 'Amazon Web Services cloud platform. Provides EC2 compute, S3 storage, and scalable cloud infrastructure.',
     'MySQL Workbench': 'Visual tool for database design, schema modeling, SQL development, and server administration.',
+    'Jira-based Agile workflow': 'Structured Jira workflow: task discussion, planning, unit-tested implementation, manual verification, PR creation, review, and merge - cut bug-resolution time by 40%.',
+    'Spec-Driven Development (GSD, BMad, OpenSpec)': 'Methodology for AI-assisted development using structured specifications. Ensures AI-generated code aligns with project architecture (GSD, BMad, OpenSpec).',
+    'AI-assisted development (Claude Code, OpenCode CLI)': 'Agentic coding with Claude Code and OpenCode CLI - AI proposes implementation plans from Jira tickets that I accept, edit, or extend, then implement test-first.',
   };
 
   const modalOverlay = document.getElementById('techModal');
@@ -1618,17 +1774,17 @@
   const particleContainer = document.getElementById('particleContainer');
 
   const lightPalette = [
-    'rgba(255,255,255,0.20)',
-    'rgba(200,230,255,0.12)',
-    'rgba(255,255,200,0.12)',
-    'rgba(180,230,180,0.10)',
+    'rgba(0,0,0,0.10)',
+    'rgba(255,79,163,0.30)',
+    'rgba(34,201,243,0.30)',
+    'rgba(183,243,77,0.35)',
   ];
 
   const darkPalette = [
-    'rgba(255,255,255,0.12)',
-    'rgba(200,220,255,0.08)',
-    'rgba(180,200,255,0.06)',
-    'rgba(255,255,255,0.06)',
+    'rgba(255,229,0,0.18)',
+    'rgba(255,111,187,0.20)',
+    'rgba(77,220,255,0.15)',
+    'rgba(255,255,255,0.10)',
   ];
 
   function spawnParticle() {
@@ -1652,6 +1808,16 @@
     setTimeout(spawnParticle, i * 400);
   }
   setInterval(spawnParticle, 2500);
+
+  /* ===== Back to Top ===== */
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) backTop.classList.add('show');
+    else backTop.classList.remove('show');
+  });
+  backTop.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
 </script>
 </body>
